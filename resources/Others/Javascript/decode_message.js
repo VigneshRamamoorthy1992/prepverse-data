@@ -1,3 +1,5 @@
+/* solution */
+
 function decode(message) {
   let i = 0,
     j = 0;

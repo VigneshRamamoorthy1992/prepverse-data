@@ -7,7 +7,13 @@ m - target.length
 n - lenth of word bank
 https://www.youtube.com/watch?v=oBt53YbR9Kk&t=9994s
 */
+/* tags: [] */
 
+/* statement */
+/*
+ */
+
+/* solution */
 function allConstruct(target, wordBank, memo = {}) {
   if (target in memo) return memo[target];
   if (target === "") return [[]];

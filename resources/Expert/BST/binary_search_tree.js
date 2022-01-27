@@ -1,3 +1,7 @@
+/* tags: [] */
+
+/* statement */
+
 /*
     binary search tree
     insert
@@ -7,7 +11,7 @@
     BFS
     DFS - inorder, pre-order, post-order
 */
-
+/* solution */
 class Node {
   constructor(value) {
     this.value = value;

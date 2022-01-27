@@ -1,3 +1,5 @@
+/* solution */
+
 function getValue(obj, str) {
   str = str.replaceAll("[", ".");
   str = str.replaceAll("]", "");

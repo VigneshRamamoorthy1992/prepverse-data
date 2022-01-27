@@ -1,3 +1,4 @@
+/* solution */
 let throttleTimer;
 const throttle = (callback, time) => {
   if (throttleTimer) return;

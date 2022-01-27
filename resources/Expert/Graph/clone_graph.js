@@ -2,6 +2,9 @@
 /* 
 https://leetcode.com/problems/clone-graph/
 
+*/
+/* statement */
+/*
 Given a reference of a node in a connected undirected graph.
 
 Return a deep copy (clone) of the graph.
@@ -59,6 +62,8 @@ The number of nodes in the graph is in the range [0, 100].
 Node.val is unique for each node.
 There are no repeated edges and no self-loops in the graph.
 The Graph is connected and all nodes can be visited starting from the given node. */
+
+/* solution */
 
 var cloneGraph = function (node) {
   // If start node is null than we can't do any cloning

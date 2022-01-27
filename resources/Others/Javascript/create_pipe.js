@@ -1,3 +1,6 @@
+/* tags: [] */
+
+/* statement */
 /* 
 const times = (y) =>  (x) => x * y
 const plus = (y) => (x) => x + y
@@ -25,6 +28,8 @@ pipe([
 ]) 
 // (x * 2 - 3) / 4
  */
+
+/* solution */
 
 function pipe(funcs) {
   return function (arg) {

@@ -8,23 +8,24 @@ n - length of an array
 https://www.youtube.com/watch?v=oBt53YbR9Kk&t=9994s
 */
 
+/* solution */
 
-function canSum(targetSum, numbers, memo={}) {
-    if(targetSum in memo) return memo[targetSum];
-    if (targetSum === 0) return true;
-    if (targetSum < 0) return false;
+function canSum(targetSum, numbers, memo = {}) {
+  if (targetSum in memo) return memo[targetSum];
+  if (targetSum === 0) return true;
+  if (targetSum < 0) return false;
 
-    for(let num of numbers){
-        const remainder = targetSum - num;
-    
-        if( canSum(remainder, numbers, memo) === true){
-            memo[targetSum] = true;
-            return true;
-        }
+  for (let num of numbers) {
+    const remainder = targetSum - num;
+
+    if (canSum(remainder, numbers, memo) === true) {
+      memo[targetSum] = true;
+      return true;
     }
-    memo[targetSum] = false;
-    return memo[targetSum];
+  }
+  memo[targetSum] = false;
+  return memo[targetSum];
 }
 
-console.log(canSum(8,[2,3,5]));
-console.log(canSum(300,[7,14]));
+console.log(canSum(8, [2, 3, 5]));
+console.log(canSum(300, [7, 14]));

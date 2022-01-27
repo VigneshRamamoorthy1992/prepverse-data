@@ -1,5 +1,6 @@
 /* tags: [Walmart] */
 
+/* solution */
 function total() {
   var arr = [1, 20, 30];
   var total = 0;

@@ -1,6 +1,11 @@
 /* 
-Design Tic-Tac-Toe
 https://leetcode.com/problems/design-tic-tac-toe/
+*/
+/* tags: [Amazon] */
+
+/* statement */
+/*
+Design Tic-Tac-Toe
 
 Assume the following rules are for the tic-tac-toe game on an n x n board between two players:
 
@@ -77,32 +82,35 @@ Follow-up: Could you do better than O(n2) per move() operation?
 // Output
 // [null, 0, 0, 0, 0, 0, 0, 1]
 
+/* solution */
 
 class TicTacToe {
-    constructor(n) {
-      this.len = n;
-  
-      this.rows = new Array(n).fill(0);   // [1,-2,3]
-      this.cols = new Array(n).fill(0);     // [1,0,0]
-      this.dia = 0;
-      this.antiDia = 0;  
-    }
-  
-    move(row, col, player) {
-      const i = player === 1 ? 1 : -1;   1
-  
-      this.rows[row] += i;
-      this.cols[col] += i;
-      if (row === col) this.dia += i;
-      if (col === this.len - row - 1) this.antiDia += i;
-  
-      if (
-        Math.abs(this.rows[row]) === this.len ||
-        Math.abs(this.cols[col]) === this.len ||
-        Math.abs(this.dia) === this.len ||
-        Math.abs(this.antiDia) === this.len
-      ) return player;
-  
-      return 0;
-    }
+  constructor(n) {
+    this.len = n;
+
+    this.rows = new Array(n).fill(0); // [1,-2,3]
+    this.cols = new Array(n).fill(0); // [1,0,0]
+    this.dia = 0;
+    this.antiDia = 0;
   }
+
+  move(row, col, player) {
+    const i = player === 1 ? 1 : -1;
+    1;
+
+    this.rows[row] += i;
+    this.cols[col] += i;
+    if (row === col) this.dia += i;
+    if (col === this.len - row - 1) this.antiDia += i;
+
+    if (
+      Math.abs(this.rows[row]) === this.len ||
+      Math.abs(this.cols[col]) === this.len ||
+      Math.abs(this.dia) === this.len ||
+      Math.abs(this.antiDia) === this.len
+    )
+      return player;
+
+    return 0;
+  }
+}

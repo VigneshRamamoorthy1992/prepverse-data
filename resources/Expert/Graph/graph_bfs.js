@@ -1,24 +1,25 @@
-function bfs(graph, source){
-    const queue = [source];
+/* solution */
 
-    while(queue.length > 0){
+function bfs(graph, source) {
+  const queue = [source];
 
-        const current = queue.shift();
-        console.log(current);
+  while (queue.length > 0) {
+    const current = queue.shift();
+    console.log(current);
 
-        for(let neighbor of graph[current]){
-            queue.push(neighbor)
-        }
+    for (let neighbor of graph[current]) {
+      queue.push(neighbor);
     }
+  }
 }
 
 const graph = {
-    a: ['c','b'],
-    b: ['d'],
-    c: ['e'],
-    d: ['f'],
-    e: [],
-    f: []
+  a: ["c", "b"],
+  b: ["d"],
+  c: ["e"],
+  d: ["f"],
+  e: [],
+  f: [],
 };
 
-bfs(graph, 'a');
+bfs(graph, "a");

@@ -2,6 +2,11 @@
 
 https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/solution/
 
+*/
+/* tags: [Amazon] */
+
+/* statement */
+/*
 Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
 
  
@@ -26,30 +31,28 @@ Constraints:
 The number of nodes in the tree is in the range [0, 2000].
 -100 <= Node.val <= 100 */
 
+/* solution */
 
-var zigzagLevelOrder = function(root) {
-    if(!root) return [];
-    let queue = [root];
-    let output = [];
-    let deep = 0;
-    while(queue.length > 0){
-      const size = queue.length;
-      const level = [];
-      
-      for(let i=0; i< size; i++){
-        const node = queue.shift();
-        if(deep % 2 == 0) level.push(node.val);
-        else level.unshift(node.val);
-        
-        if(node.left) queue.push(node.left)
-        if(node.right) queue.push(node.right)
-      }
-      output.push(level)
-      deep++;
+var zigzagLevelOrder = function (root) {
+  if (!root) return [];
+  let queue = [root];
+  let output = [];
+  let deep = 0;
+  while (queue.length > 0) {
+    const size = queue.length;
+    const level = [];
+
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      if (deep % 2 == 0) level.push(node.val);
+      else level.unshift(node.val);
+
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
-    
-    
-    return output
-    
-    
-  };
+    output.push(level);
+    deep++;
+  }
+
+  return output;
+};

@@ -230,66 +230,108 @@
           "children": [
             {
               "path": "resources/Expert/BST/binary_search_tree.js",
-              "name": "binary_search_tree.js"
+              "name": "binary_search_tree.js",
+              "docs": "\n\n\n    binary search tree\n    insert\n    find\n    delete\n    find successor\n    BFS\n    DFS - inorder, pre-order, post-order\n\n",
+              "solution": "\nclass Node {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nclass BinarySearchTree {\n  constructor() {\n    this.root = null;\n  }\n\n  insert(value) {\n    const newNode = new Node(value);\n\n    if (this.root === null) {\n      this.root = newNode;\n    }\n\n    let current = this.root;\n\n    while (current) {\n      if (current.value === value) {\n        console.log(\"bst \", JSON.stringify(this.root));\n        return undefined;\n      }\n      if (value < current.value) {\n        if (current.left === null) {\n          current.left = newNode;\n        }\n        current = current.left;\n      } else if (value > current.value) {\n        if (current.right === null) {\n          current.right = newNode;\n        }\n        current = current.right;\n      }\n    }\n  }\n\n  find(value) {\n    if (!this.root) {\n      return false;\n    }\n\n    let current = this.root;\n\n    while (current) {\n      if (value === current.value) {\n        return true;\n      } else if (value < current.value) {\n        current = current.left;\n      } else if (value > current.value) {\n        current = current.right;\n      }\n    }\n    return false;\n  }\n\n  delete(value) {\n    this.root = this.deleteNode(this.root, value);\n    console.log(\"D1: \", JSON.stringify(this.root));\n  }\n\n  deleteNode(current, value) {\n    console.log(\"delete current: \", current, \" : \", value);\n    if (current === null) {\n      return current;\n    }\n\n    // when value is found\n    if (current.value === value) {\n      if (current.left === null && current.right === null) {\n        // node to delete does not have child\n        return null;\n      } else if (current.left === null) {\n        // node to delete does not have left child\n        return current.right;\n      } else if (current.right === null) {\n        // node to delete does not have right child\n        return current.left;\n      } else {\n        // find the successor\n        // minimum of the right node\n        const successor = this.findSuccessor(current.right);\n        console.log(\"successor: \", successor);\n        // replace the source node\n        current.value = successor.value;\n        // delete the successor\n        current.right = this.deleteNode(current.right, successor.value);\n        return current;\n      }\n    } else if (value < current.value) {\n      current.left = this.deleteNode(current.left, value);\n      return current;\n    } else if (value > current.value) {\n      current.right = this.deleteNode(current.right, value);\n      return current;\n    }\n  }\n\n  findSuccessor(current) {\n    while (!!current.left) {\n      current = current.left;\n    }\n    return current;\n  }\n\n  breadthFirstTraversal(bst = this.root) {\n    console.log(\"--------------------------------------\");\n    console.log(\"bst : \", JSON.stringify(bst));\n    if (bst === null) {\n      return null;\n    }\n\n    const queue = [bst];\n    while (queue.length > 0) {\n      let node = queue.shift();\n      console.log(node.value);\n      if (node.left === null && node.right === null) {\n        continue;\n      }\n      if (!!node.left) {\n        queue.push(node.left);\n      }\n      if (!!node.right) {\n        queue.push(node.right);\n      }\n    }\n  }\n\n  depthFirstSearchInOrderTraversal(bst = this.root) {\n    if (bst !== null) {\n      this.depthFirstSearchInOrderTraversal(bst.left);\n      console.log(bst.value);\n      this.depthFirstSearchInOrderTraversal(bst.right);\n    }\n\n    // another solution\n    if (!root) return [];\n    return [\n      ...inorderTraversal(root.left),\n      root.val,\n      ...inorderTraversal(root.right),\n    ];\n\n    // iterative solution\n    /**\n     * Definition for a binary tree node.\n     * function TreeNode(val) {\n     *     this.val = val;\n     *     this.left = this.right = null;\n     * }\n     */\n    /**\n     * @param {TreeNode} root\n     * @return {number[]}\n     */\n    var inorderTraversal = function (root) {\n      const output = [];\n\n      if (root === null) {\n        return output;\n      }\n\n      /**\n       * The goal is to maintain a stack of nodes to visit as we traverse\n       * down the tree. As we traverse down, We go left and push all the\n       * left nodes first in the stack. Once we reach to the bottom, we\n       * store the node value and traverse right.\n       *           1\n       *         /   \\\n       *        2     3    inorder traversal: 4 -> 2 -> 5 -> 1 -> 6 -> 3\n       *       / \\   /     (left -> root -> right)\n       *      4   5 6\n       */\n      const stack = [];\n      let curr = root;\n\n      while (curr !== null || stack.length !== 0) {\n        if (curr !== null) {\n          stack.push(curr);\n          curr = curr.left;\n        } else {\n          curr = stack.pop();\n          output.push(curr.val);\n          curr = curr.right;\n        }\n      }\n\n      return output;\n    };\n  }\n\n  depthFirstSearchPreOrderTraversal(bst = this.root) {\n    if (bst !== null) {\n      console.log(bst.value);\n      this.depthFirstSearchPreOrderTraversal(bst.left);\n      this.depthFirstSearchPreOrderTraversal(bst.right);\n    }\n  }\n\n  preorderTraversal = function (root) {\n    if (!root) return [];\n    let stack = [root];\n    let output = [];\n\n    while (stack.length) {\n      root = stack.pop();\n      if (root !== null) {\n        output.push(root.val);\n        if (root.right !== null) stack.push(root.right);\n        if (root.left !== null) stack.push(root.left);\n      }\n    }\n\n    return output;\n  };\n\n  depthFirstSearchPostOrderTraversal(bst = this.root) {\n    if (bst !== null) {\n      this.depthFirstSearchPostOrderTraversal(bst.left);\n      this.depthFirstSearchPostOrderTraversal(bst.right);\n      console.log(bst.value);\n    }\n  }\n\n  postorderTraversal = function (root) {\n    return recursive(root);\n  };\n\n  recursive = (node) => {\n    let output = [];\n    let stack = [];\n    let lastNodeVisited = null;\n    while (stack.length || node !== null) {\n      if (node !== null) {\n        stack.push(node);\n        node = node.left;\n      } else {\n        let peekNode = stack[stack.length - 1];\n        if (peekNode.right !== null && peekNode.right !== lastNodeVisited) {\n          node = peekNode.right;\n        } else {\n          output.push(peekNode.val);\n          lastNodeVisited = stack.pop();\n        }\n      }\n    }\n    return output;\n  };\n\n  validBST() {\n    return this.validBSTUtil(this.root);\n  }\n\n  // Time complexity O(n)\n  // Space complexity O(n)\n  validBSTUtil(node, min, max) {\n    // null node is a bst\n    if (node === null) {\n      return true;\n    }\n\n    if (node.value <= min || node.value >= max) {\n      return false;\n    }\n    return (\n      this.validBSTUtil(node.left, min, node.value) &&\n      this.validBSTUtil(node.right, node.value, max)\n    );\n  }\n  // VAILD BST using inOrder to sort asc then validate\n  isValidBST = function (root) {\n    function inOrder(node) {\n      if (!node) return [];\n      return [...inOrder(node.left), node.val, ...inOrder(node.right)];\n    }\n\n    const sortedArr = inOrder(root);\n\n    for (let i = 0; i < sortedArr.length; i++) {\n      if (sortedArr[i + 1] <= sortedArr[i]) return false;\n    }\n    return true;\n  };\n}\n\nconst bst = new BinarySearchTree();\n\nconsole.log(\">>>>>>>>>>>>>>>>> Insert\");\nbst.insert(10);\nbst.insert(8);\nbst.insert(19);\nbst.insert(7);\nbst.insert(18);\nbst.insert(21);\nbst.insert(17);\nbst.insert(20);\nbst.insert(25);\n\nconsole.log(\">>>>>>>>>>>>>>>>> Find\");\n\nconsole.log(\"find1: 21: \", bst.find(21));\nconsole.log(\"find2: 11: \", bst.find(11));\n\nconsole.log(\">>>>>>>>>>>>>>>>> delete\");\n// bst.delete(7); // no child node\n// bst.delete(18); // one child node\nbst.delete(21); // with child node\n\n//Traversal\n// BFS\n// console.log(\">>>>>>>>>>>>>>>>> BFS\");\n// bst.breadthFirstTraversal();\n// DFS\nconsole.log(\">>>>>>>>>>>>>>>>> in-order traversal\");\nbst.depthFirstSearchInOrderTraversal();\n// console.log(\">>>>>>>>>>>>>>>>> pre-order traversal\");\n// bst.depthFirstSearchPreOrderTraversal();\n// console.log(\">>>>>>>>>>>>>>>>> post-order traversal\");\n// bst.depthFirstSearchInOrderTraversal()\n\n//Verification\n// greedy algorithm\nconsole.log(\"valid BST >> \", bst.validBST());\n// Sort\n// Priority queue operations\n",
+              "tags": [""]
             },
             {
               "path": "resources/Expert/BST/binary_tree_level_order_traversal.js",
-              "name": "binary_tree_level_order_traversal.js"
+              "name": "binary_tree_level_order_traversal.js",
+              "docs": "\n\nGiven the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).\n\nExample 1:\n\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: [[3],[9,20],[15,7]]\nExample 2:\n\nInput: root = [1]\nOutput: [[1]]\nExample 3:\n\nInput: root = []\nOutput: []\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [0, 2000].\n-1000 <= Node.val <= 1000\n\n\n\n",
+              "solution": "\nvar levelOrder = function (root) {\n  if (!root) return [];\n\n  const queue = [root];\n  const retVal = [];\n\n  while (queue.length > 0) {\n    const levelSize = queue.length;\n    let levelValues = [];\n    for (let i = 0; i < levelSize; i++) {\n      const current = queue.shift();\n      levelValues.push(current.val);\n      if (current.left) queue.push(current.left);\n      if (current.right) queue.push(current.right);\n    }\n\n    retVal.push(levelValues);\n    levelValues = [];\n  }\n\n  return retVal;\n};\n",
+              "tags": ["Amazon", " Microsoft"]
             },
             {
               "path": "resources/Expert/BST/binary_tree_max_path_sum.js",
-              "name": "binary_tree_max_path_sum.js"
+              "name": "binary_tree_max_path_sum.js",
+              "docs": "\n\nA path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.\n\nThe path sum of a path is the sum of the node's values in the path.\n\nGiven the root of a binary tree, return the maximum path sum of any non-empty path.\n\n\n\nExample 1:\n\n\nInput: root = [1,2,3]\nOutput: 6\nExplanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.\nExample 2:\n\n\nInput: root = [-10,9,20,null,null,15,7]\nOutput: 42\nExplanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [1, 3 * 104].\n-1000 <= Node.val <= 1000\n\n\nnote: find max gain at each point and return\n\n",
+              "solution": "\n\nvar maxPathSum = function (root) {\n  let max = Number.NEGATIVE_INFINITY;\n\n  function dfs(node) {\n    if (!node) {\n      return 0;\n    }\n\n    let left = Math.max(dfs(node.left), 0);\n    let right = Math.max(dfs(node.right), 0);\n\n    max = Math.max(node.val + left + right, max);\n\n    return node.val + Math.max(left, right);\n  }\n\n  dfs(root);\n\n  return max;\n};\n",
+              "tags": [""]
             },
             {
               "path": "resources/Expert/BST/construct_a_tree_from_inorder_and_preorder.js",
               "name": "construct_a_tree_from_inorder_and_preorder.js",
+              "docs": "\nGiven two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.\n\n<pre>\n<code>\nExample 1:\n\nInput: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]\nOutput: [3,9,20,null,null,15,7]\nExample 2:\n\nInput: preorder = [-1], inorder = [-1]\nOutput: [-1]\n</code>\n</pre>\n\n\nConstraints:\n\n1 <= preorder.length <= 3000\ninorder.length == preorder.length\n-3000 <= preorder[i], inorder[i] <= 3000\npreorder and inorder consist of unique values.\nEach value of inorder also appears in preorder.\npreorder is guaranteed to be the preorder traversal of the tree.\ninorder is guaranteed to be the inorder traversal of the tree.\n\nDefinition for a binary tree node.\nfunction TreeNode(val, left, right) {\n    this.val = (val===undefined ? 0 : val)\n    this.left = (left===undefined ? null : left)\n    this.right = (right===undefined ? null : right)\n}\n\n\n",
+              "solution": "\n\nvar buildTree = function (preorder, inorder) {\n  const indexMap = inorder.reduce((map, val, index) => {\n    map[val] = index;\n    return map;\n  }, {});\n\n  let currentRootIndex = 0;\n\n  const constructTree = (left, right) => {\n    if (left > right) return null;\n\n    const currentRootVal = preorder[currentRootIndex++];\n    const index = indexMap[currentRootVal];\n    const node = new TreeNode(currentRootVal);\n\n    node.left = constructTree(left, index - 1);\n    node.right = constructTree(index + 1, right);\n\n    return node;\n  };\n\n  return constructTree(0, preorder.length - 1);\n};\n",
               "tags": ["Microsoft"]
             },
             {
               "path": "resources/Expert/BST/count_bst_permuntations.js",
-              "name": "count_bst_permuntations.js"
+              "name": "count_bst_permuntations.js",
+              "docs": "\n\n  Given an array count all the possible bst permuntations\n\n",
+              "solution": "\nfunction processData(input) {\n  input.sort(function (a, b) {\n    return a - b;\n  });\n\n  var max = input[1] - input[0];\n  var maxPairs = [input[0], input[1]];\n\n  for (var i = 2; i < input.length; i++) {\n    var prev = input[i - 1];\n    var next = input[i];\n    var diff = next - prev;\n\n    if (diff < max) {\n      max = diff;\n      maxPairs = [prev, next];\n    } else if (diff === max) {\n      maxPairs = maxPairs.concat([prev, next]);\n    }\n  }\n\n  console.log(maxPairs.join(\" \"));\n}\nprocessData([4, 2, 1, 3]);\n",
+              "tags": [""]
             },
             {
               "path": "resources/Expert/BST/diameter_of_a_tree.js",
-              "name": "diameter_of_a_tree.js"
+              "name": "diameter_of_a_tree.js",
+              "docs": "\n\nGiven the root of a binary tree, return the length of the diameter of the tree.\n\nThe diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.\n\nThe length of a path between two nodes is represented by the number of edges between them.\n\n\n\nExample 1:\n\n\nInput: root = [1,2,3,4,5]\nOutput: 3\nExplanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].\nExample 2:\n\nInput: root = [1,2]\nOutput: 1\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [1, 104].\n-100 <= Node.val <= 100\n\n\n",
+              "solution": "\n\nfunction diameterOfBinaryTree(root) {\n  let max = 0;\n\n  function maxDepth(root) {\n    if (root === null) return 0; // if our root(num) is null then there is no path. return 0/null\n    let left = maxDepth(root.left); // Assign the left  of tree to LEFT; this will be easier to call it instead of writing \"maxDepth(root.left)\" each time\n    let right = maxDepth(root.right); //Same above\n\n    max = Math.max(max, left + right); //if the path doesn't go through the root we just get the max of them\n    return Math.max(left, right) + 1; // the path goes through the root so we add 1(for the root)\n  }\n  //since we don't know if the path will go through the root or not we will have to get the max between(path that visits the root, or the path that doesn't go through the root.)\n  maxDepth(root);\n  return max;\n}\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/flood_fill.js",
-              "name": "flood_fill.js"
+              "name": "flood_fill.js",
+              "docs": "\n\nAn image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.\n\nYou are also given three integers sr, sc, and newColor. You should perform a flood fill on the image starting from the pixel image[sr][sc].\n\nTo perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same color), and so on. Replace the color of all of the aforementioned pixels with newColor.\n\nReturn the modified image after performing the flood fill.\n\n\n\nExample 1:\n\n\nInput: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2\nOutput: [[2,2,2],[2,2,0],[2,0,1]]\nExplanation: From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.\nNote the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.\nExample 2:\n\nInput: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2\nOutput: [[2,2,2],[2,2,2]]\n\n\nConstraints:\n\nm == image.length\nn == image[i].length\n1 <= m, n <= 50\n0 <= image[i][j], newColor < 216\n0 <= sr < m\n0 <= sc < n\n\n\n",
+              "solution": "\nconst floodFill = (image, sr, sc, newColor, firstColor = image[sr][sc]) => {\n  // handle if the coordinate is out of bounds\n  // or if it is already the new color\n  // or if it's not from the original color we're trying to change\n  if (\n    sr < 0 ||\n    sc < 0 ||\n    sr >= image.length ||\n    sc >= image[sr].length ||\n    image[sr][sc] !== firstColor ||\n    image[sr][sc] === newColor\n  ) {\n    return image; // return image as-is\n  }\n\n  image[sr][sc] = newColor;\n\n  floodFill(image, sr + 1, sc, newColor, firstColor);\n  floodFill(image, sr - 1, sc, newColor, firstColor);\n  floodFill(image, sr, sc + 1, newColor, firstColor);\n  floodFill(image, sr, sc - 1, newColor, firstColor);\n\n  // return modified image\n  return image;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/invert_binary_tree.js",
               "name": "invert_binary_tree.js",
-              "tags": ["Microsoft"]
+              "docs": "\n\n\nGiven the root of a binary tree, invert the tree, and return its root.\n\n\n\nExample 1:\n\n\nInput: root = [4,2,7,1,3,6,9]\nOutput: [4,7,2,9,6,3,1]\nExample 2:\n\n\nInput: root = [2,1,3]\nOutput: [2,3,1]\nExample 3:\n\nInput: root = []\nOutput: []\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [0, 100].\n-100 <= Node.val <= 100\n \n",
+              "solution": "\n\n// Recursion\nfunction invertTree(root) {\n  if (root == null) return root;\n  [root.left, root.right] = [invertTree(root.right), invertTree(root.left)];\n  return root;\n}\n\n// DFS\nfunction invertTree(root) {\n  const stack = [root];\n\n  while (stack.length) {\n    const n = stack.pop();\n    if (n != null) {\n      [n.left, n.right] = [n.right, n.left];\n      stack.push(n.left, n.right);\n    }\n  }\n\n  return root;\n}\n\n// BFS\nfunction invertTree(root) {\n  const queue = [root];\n\n  while (queue.length) {\n    const n = queue.shift();\n    if (n != null) {\n      [n.left, n.right] = [n.right, n.left];\n      queue.push(n.left, n.right);\n    }\n  }\n\n  return root;\n}\n",
+              "tags": ["Amazon", " Microsoft"]
             },
             {
               "path": "resources/Expert/BST/level_order_traversal.js",
-              "name": "level_order_traversal.js"
+              "name": "level_order_traversal.js",
+              "docs": "\n\nGiven the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).\n\n\n\nExample 1:\n\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: [[3],[9,20],[15,7]]\nExample 2:\n\nInput: root = [1]\nOutput: [[1]]\nExample 3:\n\nInput: root = []\nOutput: []\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [0, 2000].\n-1000 <= Node.val <= 1000 \n",
+              "solution": "\n\nvar levelOrder = function (root) {\n  // If root is null return an empty array\n  if (!root) return [];\n\n  const queue = [root]; // initialize the queue with root\n  const levels = []; // declare output array\n\n  while (queue.length !== 0) {\n    const queueLength = queue.length; // Get the length prior to dequeueing\n    const currLevel = []; // Declare this level\n    // loop through to exhaust all options and only to include nodes at currLevel\n    for (let i = 0; i < queueLength; i++) {\n      // Get next node\n      const current = queue.shift();\n\n      if (current.left) {\n        queue.push(current.left);\n      }\n      if (current.right) {\n        queue.push(current.right);\n      }\n      // After we add left and right for current, we add to currLevel\n      currLevel.push(current.val);\n    }\n    // Level has been finished. Push into output array\n    levels.push(currLevel);\n  }\n  return levels;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/lowest_common_ancestor.js",
-              "name": "lowest_common_ancestor.js"
+              "name": "lowest_common_ancestor.js",
+              "docs": "\n\nGiven a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.\n\nAccording to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”\n\n\n\nExample 1:\n\n\nInput: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8\nOutput: 6\nExplanation: The LCA of nodes 2 and 8 is 6.\nExample 2:\n\n\nInput: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4\nOutput: 2\nExplanation: The LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.\nExample 3:\n\nInput: root = [2,1], p = 2, q = 1\nOutput: 2\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [2, 105].\n-109 <= Node.val <= 109\nAll Node.val are unique.\np != q\np and q will exist in the BST. \n\n",
+              "solution": "\n\n// for not BST recursive solution\nvar lowestCommonAncestor = function (root, p, q) {\n  if (!root || root === p || root === q) return root; // edge case or found p or q: return root\n  const left = lowestCommonAncestor(root.left, p, q); // look if left child has p or q\n  const right = lowestCommonAncestor(root.right, p, q); // look if right child has p or q\n  return left && right ? root : left || right; // if both children returned a node, then current is an ancestor of p and q (LCA)\n};\n\n// for BST Recursive solution\n\nvar lowestCommonAncestor = function (root, p, q) {\n  if (root.val < p.val && root.val < q.val) {\n    return lowestCommonAncestor(root.right, p, q);\n  }\n  if (root.val > p.val && root.val > q.val) {\n    return lowestCommonAncestor(root.left, p, q);\n  }\n  return root;\n};\n\n// iterative solution\nvar lowestCommonAncestor = function (root, p, q) {\n  while (root) {\n    if (root.val < p.val && root.val < q.val) {\n      root = root.right;\n    } else if (root.val > p.val && root.val > q.val) {\n      root = root.left;\n    } else {\n      break;\n    }\n  }\n  return root;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/populate_next_right_pointer_to_each_other.js",
               "name": "populate_next_right_pointer_to_each_other.js",
+              "docs": "\n\nYou are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:\n\nstruct Node {\n  int val;\n  Node *left;\n  Node *right;\n  Node *next;\n}\nPopulate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.\n\nInitially, all next pointers are set to NULL.\n\n\n\nExample 1:\n\n\nInput: root = [1,2,3,4,5,6,7]\nOutput: [1,#,2,3,#,4,5,6,7,#]\nExplanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.\nExample 2:\n\nInput: root = []\nOutput: []\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [0, 212 - 1].\n-1000 <= Node.val <= 1000\n\n\nFollow-up:\n\nYou may only use constant extra space.\nThe recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.\n\n * // Definition for a Node.\n * function Node(val, left, right, next) {\n *    this.val = val === undefined ? null : val;\n *    this.left = left === undefined ? null : left;\n *    this.right = right === undefined ? null : right;\n *    this.next = next === undefined ? null : next;\n * };\n \n\n",
+              "solution": "\n\nvar connect = function (root) {\n  if (root == null) return root;\n  let queue = [root];\n  while (queue.length != 0) {\n    let next = [];\n    while (queue.length != 0) {\n      let node = queue.shift();\n      node.next = queue[0] || null;\n      if (node.left != null) {\n        next.push(node.left);\n      }\n      if (node.right != null) {\n        next.push(node.right);\n      }\n    }\n    queue = next;\n  }\n  return root;\n};\n",
               "tags": ["Microsoft"]
             },
             {
               "path": "resources/Expert/BST/symmetric_tree.js",
-              "name": "symmetric_tree.js"
+              "name": "symmetric_tree.js",
+              "docs": "\n\nGiven the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).\n\n\n\nExample 1:\n\n\nInput: root = [1,2,2,3,4,4,3]\nOutput: true\nExample 2:\n\n\nInput: root = [1,2,2,null,3,null,3]\nOutput: false\n\n\nConstraints:\n\nThe number of nodes in the tree is in the range [1, 1000].\n-100 <= Node.val <= 100\n\n\nFollow up: Could you solve it both recursively and iteratively?\n\n\n",
+              "solution": "\n\nvar isSymmetric = function (root) {\n  const queue = [];\n\n  queue.push(root, root);\n\n  while (queue.length > 0) {\n    const node1 = queue.shift();\n    const node2 = queue.shift();\n\n    if (node1 == null && node2 == null) continue;\n    if (node1 == null || node2 == null) return false;\n    if (node1.val != node2.val) return false;\n\n    queue.push(node1.left, node2.right);\n    queue.push(node1.right, node2.left);\n  }\n\n  return true;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/word_ladder.js",
-              "name": "word_ladder.js"
+              "name": "word_ladder.js",
+              "docs": "\n\nA transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:\n\nEvery adjacent pair of words differs by a single letter.\nEvery si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.\nsk == endWord\nGiven two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.\n\n\n\nExample 1:\n\nInput: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]\nOutput: 5\nExplanation: One shortest transformation sequence is \"hit\" -> \"hot\" -> \"dot\" -> \"dog\" -> cog\", which is 5 words long.\nExample 2:\n\nInput: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]\nOutput: 0\nExplanation: The endWord \"cog\" is not in wordList, therefore there is no valid transformation sequence.\n\n\nConstraints:\n\n1 <= beginWord.length <= 10\nendWord.length == beginWord.length\n1 <= wordList.length <= 5000\nwordList[i].length == beginWord.length\nbeginWord, endWord, and wordList[i] consist of lowercase English letters.\nbeginWord != endWord\nAll the words in wordList are unique.\n\n\n",
+              "solution": "\n\nvar ladderLength = function (beginWord, endWord, wordList) {\n  const wordSet = new Set(wordList);\n  let queue = [beginWord];\n  let steps = 1;\n\n  while (queue.length) {\n    const next = [];\n\n    // loop over each word in the queue\n    for (let word of queue) {\n      if (word === endWord) return steps;\n\n      // loop over each char of the word\n      for (let i = 0; i < word.length; i++) {\n        // and replace the char with letters from [a - z]\n        for (let j = 0; j < 26; j++) {\n          const newWord =\n            word.slice(0, i) + String.fromCharCode(j + 97) + word.slice(i + 1);\n\n          // if the new word exist in the word list add it to the queue\n          if (wordSet.has(newWord)) {\n            next.push(newWord);\n            wordSet.delete(newWord);\n          }\n        }\n      }\n    }\n    queue = next;\n    steps++;\n  }\n  return 0;\n};\n\nladderLength(\"hit\", \"cog\", [\"hot\", \"dot\", \"dog\", \"lot\", \"log\", \"cog\"]);\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/word_ladder_2.js",
-              "name": "word_ladder_2.js"
+              "name": "word_ladder_2.js",
+              "docs": "\n\nA transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:\n\nEvery adjacent pair of words differs by a single letter.\nEvery si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.\nsk == endWord\nGiven two words, beginWord and endWord, and a dictionary wordList, return all the shortest transformation sequences from beginWord to endWord, or an empty list if no such sequence exists. Each sequence should be returned as a list of the words [beginWord, s1, s2, ..., sk].\n\n\n\nExample 1:\n\nInput: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]\nOutput: [[\"hit\",\"hot\",\"dot\",\"dog\",\"cog\"],[\"hit\",\"hot\",\"lot\",\"log\",\"cog\"]]\nExplanation: There are 2 shortest transformation sequences:\n\"hit\" -> \"hot\" -> \"dot\" -> \"dog\" -> \"cog\"\n\"hit\" -> \"hot\" -> \"lot\" -> \"log\" -> \"cog\"\nExample 2:\n\nInput: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]\nOutput: []\nExplanation: The endWord \"cog\" is not in wordList, therefore there is no valid transformation sequence.\n\n\nConstraints:\n\n1 <= beginWord.length <= 5\nendWord.length == beginWord.length\n1 <= wordList.length <= 1000\nwordList[i].length == beginWord.length\nbeginWord, endWord, and wordList[i] consist of lowercase English letters.\nbeginWord != endWord\nAll the words in wordList are unique.\n\n\n\n",
+              "solution": "\n\nvar findLadders = function (beginWord, endWord, wordList) {\n  if (!wordList.includes(endWord)) return [];\n\n  const result = [],\n    map = new Map(),\n    steps = new Map();\n\n  for (const word of wordList) {\n    for (let i = 0; i < word.length; i++) {\n      const hash = word.substring(0, i) + \"*\" + word.substring(i + 1);\n\n      if (!map.has(hash)) map.set(hash, []);\n\n      map.get(hash).push(word);\n      steps.set(hash, wordList.length);\n    }\n  }\n\n  const queue = [[beginWord]];\n\n  while (queue.length > 0) {\n    const current = queue.shift();\n    const set = new Set(current); // for O(1) lookup time\n    const lastWord = current[current.length - 1];\n    if (lastWord === endWord) {\n      if (result.length === 0 || current.length === result[0].length)\n        result.push(current);\n      else break; // early stop because the current path takes longer\n    } else {\n      for (let i = 0; i < lastWord.length; i++) {\n        const hash = lastWord.substring(0, i) + \"*\" + lastWord.substring(i + 1);\n        if (!map.has(hash) || current.length > steps.get(hash)) continue;\n\n        for (const nextWord of map.get(hash))\n          if (!set.has(nextWord))\n            // don't want to go back to a word already in the path\n            queue.push([...current, nextWord]);\n\n        steps.set(hash, current.length);\n      }\n    }\n  }\n  return result;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/BST/zig_zag_level_order_traversal.js",
-              "name": "zig_zag_level_order_traversal.js"
+              "name": "zig_zag_level_order_traversal.js",
+              "docs": "\n\nGiven the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).\n\n \n\nExample 1:\n\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: [[3],[20,9],[15,7]]\nExample 2:\n\nInput: root = [1]\nOutput: [[1]]\nExample 3:\n\nInput: root = []\nOutput: []\n \n\nConstraints:\n\nThe number of nodes in the tree is in the range [0, 2000].\n-100 <= Node.val <= 100 \n\n",
+              "solution": "\n\nvar zigzagLevelOrder = function (root) {\n  if (!root) return [];\n  let queue = [root];\n  let output = [];\n  let deep = 0;\n  while (queue.length > 0) {\n    const size = queue.length;\n    const level = [];\n\n    for (let i = 0; i < size; i++) {\n      const node = queue.shift();\n      if (deep % 2 == 0) level.push(node.val);\n      else level.unshift(node.val);\n\n      if (node.left) queue.push(node.left);\n      if (node.right) queue.push(node.right);\n    }\n    output.push(level);\n    deep++;\n  }\n\n  return output;\n};\n",
+              "tags": ["Amazon"]
             }
           ]
         },
@@ -299,7 +341,10 @@
           "children": [
             {
               "path": "resources/Expert/Backtracking/all_subsets.js",
-              "name": "all_subsets.js"
+              "name": "all_subsets.js",
+              "docs": "\n\n\n  Given an array get all the subsets of an array\n\n",
+              "solution": "\nconst getAllSubsets = (theArray) =>\n  theArray.reduce(\n    (subsets, value) => {\n      let x = subsets.concat(subsets.map((set) => [value, ...set]));\n      console.log(x);\n      return x;\n    },\n    [[]]\n  );\n\nconsole.log(getAllSubsets([1, 2, 3, 5, 6, 7]));\n",
+              "tags": [""]
             }
           ]
         },
@@ -309,27 +354,45 @@
           "children": [
             {
               "path": "resources/Expert/Design/LRU_cache.js",
-              "name": "LRU_cache.js"
+              "name": "LRU_cache.js",
+              "docs": "\n\nDesign a data structure that follows the constraints of a Least Recently Used (LRU) cache.\n\nImplement the LRUCache class:\n\nLRUCache(int capacity) Initialize the LRU cache with positive size capacity.\nint get(int key) Return the value of the key if the key exists, otherwise return -1.\nvoid put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.\nThe functions get and put must each run in O(1) average time complexity.\n\n \n\nExample 1:\n\nInput\n[\"LRUCache\", \"put\", \"put\", \"get\", \"put\", \"get\", \"put\", \"get\", \"get\", \"get\"]\n[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]\nOutput\n[null, null, null, 1, null, -1, null, -1, 3, 4]\n\nExplanation\nLRUCache lRUCache = new LRUCache(2);\nlRUCache.put(1, 1); // cache is {1=1}\nlRUCache.put(2, 2); // cache is {1=1, 2=2}\nlRUCache.get(1);    // return 1\nlRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}\nlRUCache.get(2);    // returns -1 (not found)\nlRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}\nlRUCache.get(1);    // return -1 (not found)\nlRUCache.get(3);    // return 3\nlRUCache.get(4);    // return 4\n \n\nConstraints:\n\n1 <= capacity <= 3000\n0 <= key <= 104\n0 <= value <= 105\nAt most 2 * 105 calls will be made to get and put.\n \n",
+              "solution": "\n\nclass LRUCache {\n  constructor(capacity) {\n    this.cache = new Map();\n    this.capacity = capacity;\n  }\n\n  get(key) {\n    if (!this.cache.has(key)) return -1;\n\n    const v = this.cache.get(key);\n    this.cache.delete(key);\n    this.cache.set(key, v);\n\n    return this.cache.get(key);\n  }\n\n  put(key, value) {\n    if (this.cache.has(key)) {\n      this.cache.delete(key);\n    }\n    this.cache.set(key, value);\n    if (this.cache.size > this.capacity) {\n      this.cache.delete(this.cache.keys().next().value); // keys().next().value returns first item's key\n    }\n  }\n}\n",
+              "tags": [""]
             },
             {
               "path": "resources/Expert/Design/find_median_from_data_stream.js",
-              "name": "find_median_from_data_stream.js"
+              "name": "find_median_from_data_stream.js",
+              "docs": "\n\nThe median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value and the median is the mean of the two middle values.\n\nFor example, for arr = [2,3,4], the median is 3.\nFor example, for arr = [2,3], the median is (2 + 3) / 2 = 2.5.\nImplement the MedianFinder class:\n\nMedianFinder() initializes the MedianFinder object.\nvoid addNum(int num) adds the integer num from the data stream to the data structure.\ndouble findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted.\n \n\nExample 1:\n\nInput\n[\"MedianFinder\", \"addNum\", \"addNum\", \"findMedian\", \"addNum\", \"findMedian\"]\n[[], [1], [2], [], [3], []]\nOutput\n[null, null, null, 1.5, null, 2.0]\n\nExplanation\nMedianFinder medianFinder = new MedianFinder();\nmedianFinder.addNum(1);    // arr = [1]\nmedianFinder.addNum(2);    // arr = [1, 2]\nmedianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)\nmedianFinder.addNum(3);    // arr[1, 2, 3]\nmedianFinder.findMedian(); // return 2.0\n\n\n",
+              "solution": "\n\nclass MedianFinder {\n  constructor() {\n    // set up array\n    this.arr = [];\n  }\n\n  /**\n   * @param {number} num\n   * @return {void}\n   */\n  addNum(num) {\n    // check if array is size 0, just push\n    if (this.arr.length === 0) {\n      this.arr.push(num);\n      return;\n    }\n\n    // left and right pointers for binary search\n    let l = 0;\n    let r = this.arr.length;\n\n    // keep going until pointers meet\n    while (l < r) {\n      // get mid point\n      const mid = Math.floor((l + r) / 2);\n      // check if we can insert at mid\n      if (num > this.arr[mid]) {\n        // search right half of array\n        l = mid + 1;\n      } else {\n        // search left half of array\n        r = mid;\n      }\n    }\n\n    // we can insert at left pointer\n    this.arr.splice(l, 0, num);\n  }\n\n  /**\n   * @return {number}\n   */\n  findMedian() {\n    // if odd, return middle, if even, return avg of two middle\n    const mid = Math.floor(this.arr.length / 2);\n    return (this.arr.length & 1) === 1\n      ? this.arr[mid]\n      : (this.arr[mid] + this.arr[mid - 1]) / 2;\n  }\n}\n",
+              "tags": [""]
             },
             {
               "path": "resources/Expert/Design/max_frequency_stack.js",
-              "name": "max_frequency_stack.js"
+              "name": "max_frequency_stack.js",
+              "docs": "\n\nDesign a stack-like data structure to push elements to the stack and pop the most frequent element from the stack.\n\nImplement the FreqStack class:\n\nFreqStack() constructs an empty frequency stack.\nvoid push(int val) pushes an integer val onto the top of the stack.\nint pop() removes and returns the most frequent element in the stack.\nIf there is a tie for the most frequent element, the element closest to the stack's top is removed and returned.\n \n\nExample 1:\n\nInput\n[\"FreqStack\", \"push\", \"push\", \"push\", \"push\", \"push\", \"push\", \"pop\", \"pop\", \"pop\", \"pop\"]\n[[], [5], [7], [5], [7], [4], [5], [], [], [], []]\nOutput\n[null, null, null, null, null, null, null, 5, 7, 5, 4]\n\nExplanation\nFreqStack freqStack = new FreqStack();\nfreqStack.push(5); // The stack is [5]\nfreqStack.push(7); // The stack is [5,7]\nfreqStack.push(5); // The stack is [5,7,5]\nfreqStack.push(7); // The stack is [5,7,5,7]\nfreqStack.push(4); // The stack is [5,7,5,7,4]\nfreqStack.push(5); // The stack is [5,7,5,7,4,5]\nfreqStack.pop();   // return 5, as 5 is the most frequent. The stack becomes [5,7,5,7,4].\nfreqStack.pop();   // return 7, as 5 and 7 is the most frequent, but 7 is closest to the top. The stack becomes [5,7,5,4].\nfreqStack.pop();   // return 5, as 5 is the most frequent. The stack becomes [5,7,4].\nfreqStack.pop();   // return 4, as 4, 5 and 7 is the most frequent, but 4 is closest to the top. The stack becomes [5,7].\n \n\nConstraints:\n\n0 <= val <= 109\nAt most 2 * 104 calls will be made to push and pop.\nIt is guaranteed that there will be at least one element in the stack before calling pop.\n \n\n",
+              "solution": "\n\nvar FreqStack = function () {\n  this.freqStack = [];\n  this.freqMap = {};\n};\n\n/**\n * @param {number} x\n * @return {void}\n */\nFreqStack.prototype.push = function (x) {\n  this.freqMap[x] = this.freqMap[x] ? this.freqMap[x] + 1 : 1;\n  const freq = this.freqMap[x];\n  if (this.freqStack.length < freq) {\n    this.freqStack.push([x]);\n  } else {\n    this.freqStack[freq - 1].push(x);\n  }\n};\n\n/**\n * @return {number}\n */\nFreqStack.prototype.pop = function () {\n  const lastPart = this.freqStack[this.freqStack.length - 1];\n  const result = lastPart.pop();\n  if (lastPart.length === 0) {\n    this.freqStack.pop();\n  }\n  this.freqMap[result] -= 1;\n  return result;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/Design/min_stack.js",
-              "name": "min_stack.js"
+              "name": "min_stack.js",
+              "docs": "\n\nDesign a stack that supports push, pop, top, and retrieving the minimum element in constant time.\n\nImplement the MinStack class:\n\nMinStack() initializes the stack object.\nvoid push(int val) pushes the element val onto the stack.\nvoid pop() removes the element on the top of the stack.\nint top() gets the top element of the stack.\nint getMin() retrieves the minimum element in the stack.\n \n\nExample 1:\n\nInput\n[\"MinStack\",\"push\",\"push\",\"push\",\"getMin\",\"pop\",\"top\",\"getMin\"]\n[[],[-2],[0],[-3],[],[],[],[]]\n\nOutput\n[null,null,null,null,-3,null,0,-2]\n\nExplanation\nMinStack minStack = new MinStack();\nminStack.push(-2);\nminStack.push(0);\nminStack.push(-3);\nminStack.getMin(); // return -3\nminStack.pop();\nminStack.top();    // return 0\nminStack.getMin(); // return -2\n \n\nConstraints:\n\n-231 <= val <= 231 - 1\nMethods pop, top and getMin operations will always be called on non-empty stacks.\nAt most 3 * 104 calls will be made to push, pop, top, and getMin.\n \n\n",
+              "solution": "\n\nvar MinStack = function () {\n  this.elements = [];\n};\n\n/**\n  \n   @param {number} x\n   @return {void}\n   */\nMinStack.prototype.push = function (x) {\n  this.elements.push({\n    value: x,\n    min: this.elements.length === 0 ? x : Math.min(x, this.getMin()),\n  });\n};\n/**\n  \n   @return {void}\n   */\nMinStack.prototype.pop = function () {\n  this.elements.pop();\n};\n/**\n  \n   @return {number}\n   */\nMinStack.prototype.top = function () {\n  return this.elements[this.elements.length - 1].value;\n};\n/**\n  \n   @return {number}\n   */\nMinStack.prototype.getMin = function () {\n  return this.elements[this.elements.length - 1].min;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/Design/serialize_and_deserialize.js",
-              "name": "serialize_and_deserialize.js"
+              "name": "serialize_and_deserialize.js",
+              "docs": "\n\nSerialize and Deserialize Binary Tree\n\nSerialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.\n\nDesign an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.\n\nClarification: The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.\n\n \n\nExample 1:\n\n\nInput: root = [1,2,3,null,null,4,5]\nOutput: [1,2,3,null,null,4,5]\nExample 2:\n\nInput: root = []\nOutput: []\nExample 3:\n\nInput: root = [1]\nOutput: [1]\nExample 4:\n\nInput: root = [1,2]\nOutput: [1,2]\n \n\nConstraints:\n\nThe number of nodes in the tree is in the range [0, 104].\n-1000 <= Node.val <= 1000\n \n\n// e.g.\n//    1\n//   / \\\n//  2   3\n//     / \\\n//    4   5\n//\n// data = [1, 2, null, null, 3, 4, null, null, 5, null, null]\n",
+              "solution": "\n\nfunction serialize(root) {\n  let data = [];\n\n  function go(node) {\n    if (node == null) {\n      data.push(null);\n      return;\n    }\n\n    data.push(node.val);\n    go(node.left);\n    go(node.right);\n  }\n\n  go(root);\n  return data;\n}\n\nfunction deserialize(data) {\n  function go() {\n    if (data.length === 0) return;\n\n    const val = data.shift();\n    if (val == null) return null;\n\n    const node = new TreeNode(val);\n    node.left = go();\n    node.right = go();\n    return node;\n  }\n\n  return go();\n}\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Expert/Design/tick_tac_toe.js",
-              "name": "tick_tac_toe.js"
+              "name": "tick_tac_toe.js",
+              "docs": "\n\nDesign Tic-Tac-Toe\n\nAssume the following rules are for the tic-tac-toe game on an n x n board between two players:\n\nA move is guaranteed to be valid and is placed on an empty block.\nOnce a winning condition is reached, no more moves are allowed.\nA player who succeeds in placing n of their marks in a horizontal, vertical, or diagonal row wins the game.\nImplement the TicTacToe class:\n\nTicTacToe(int n) Initializes the object the size of the board n.\nint move(int row, int col, int player) Indicates that the player with id player plays at the cell (row, col) of the board. The move is guaranteed to be a valid move.\n \n\nExample 1:\n\nInput\n[\"TicTacToe\", \"move\", \"move\", \"move\", \"move\", \"move\", \"move\", \"move\"]\n[[3], [0, 0, 1], [0, 2, 2], [2, 2, 1], [1, 1, 2], [2, 0, 1], [1, 0, 2], [2, 1, 1]]\nOutput\n[null, 0, 0, 0, 0, 0, 0, 1]\n\nExplanation\nTicTacToe ticTacToe = new TicTacToe(3);\nAssume that player 1 is \"X\" and player 2 is \"O\" in the board.\nticTacToe.move(0, 0, 1); // return 0 (no one wins)\n|X| | |\n| | | |    // Player 1 makes a move at (0, 0).\n| | | |\n\nticTacToe.move(0, 2, 2); // return 0 (no one wins)\n|X| |O|\n| | | |    // Player 2 makes a move at (0, 2).\n| | | |\n\nticTacToe.move(2, 2, 1); // return 0 (no one wins)\n|X| |O|\n| | | |    // Player 1 makes a move at (2, 2).\n| | |X|\n\nticTacToe.move(1, 1, 2); // return 0 (no one wins)\n|X| |O|\n| |O| |    // Player 2 makes a move at (1, 1).\n| | |X|\n\nticTacToe.move(2, 0, 1); // return 0 (no one wins)\n|X| |O|\n| |O| |    // Player 1 makes a move at (2, 0).\n|X| |X|\n\nticTacToe.move(1, 0, 2); // return 0 (no one wins)\n|X| |O|\n|O|O| |    // Player 2 makes a move at (1, 0).\n|X| |X|\n\nticTacToe.move(2, 1, 1); // return 1 (player 1 wins)\n|X| |O|\n|O|O| |    // Player 1 makes a move at (2, 1).\n|X|X|X|\n \n\nConstraints:\n\n2 <= n <= 100\nplayer is 1 or 2.\n0 <= row, col < n\n(row, col) are unique for each different call to move.\nAt most n2 calls will be made to move.\n \n\nFollow-up: Could you do better than O(n2) per move() operation?\n \n// Input\n// [\"TicTacToe\", \"move\", \"move\", \"move\", \"move\", \"move\", \"move\", \"move\"]\n// [[3], [0, 0, 1], [0, 2, 2], [2, 2, 1], [1, 1, 2], [2, 0, 1], [1, 0, 2], [2, 1, 1]]\n// Output\n// [null, 0, 0, 0, 0, 0, 0, 1]\n\n",
+              "solution": "\n\nclass TicTacToe {\n  constructor(n) {\n    this.len = n;\n\n    this.rows = new Array(n).fill(0); // [1,-2,3]\n    this.cols = new Array(n).fill(0); // [1,0,0]\n    this.dia = 0;\n    this.antiDia = 0;\n  }\n\n  move(row, col, player) {\n    const i = player === 1 ? 1 : -1;\n    1;\n\n    this.rows[row] += i;\n    this.cols[col] += i;\n    if (row === col) this.dia += i;\n    if (col === this.len - row - 1) this.antiDia += i;\n\n    if (\n      Math.abs(this.rows[row]) === this.len ||\n      Math.abs(this.cols[col]) === this.len ||\n      Math.abs(this.dia) === this.len ||\n      Math.abs(this.antiDia) === this.len\n    )\n      return player;\n\n    return 0;\n  }\n}\n",
+              "tags": ["Amazon"]
             }
           ]
         },
@@ -339,35 +402,45 @@
           "children": [
             {
               "path": "resources/Expert/Dynamic Progarmming/all_construct.js",
-              "name": "all_construct.js"
+              "name": "all_construct.js",
+              "docs": "\n\n \n\n",
+              "solution": "\nfunction allConstruct(target, wordBank, memo = {}) {\n  if (target in memo) return memo[target];\n  if (target === \"\") return [[]];\n\n  let result = [];\n  for (let word of wordBank) {\n    if (target.indexOf(word) === 0) {\n      const suffix = target.slice(word.length);\n      const suffixWays = allConstruct(suffix, wordBank, memo);\n      const targetWays = suffixWays.map((way) => [word, ...way]);\n      result.push(...targetWays);\n    }\n  }\n\n  memo[target] = result;\n  return result;\n}\n\nconsole.log(allConstruct(\"abcdef\", [\"ab\", \"abc\", \"cd\", \"def\", \"abcd\"]));\nconsole.log(allConstruct(\"purple\", [\"purp\", \"p\", \"ur\", \"le\", \"purpl\"]));\nconsole.log(\n  allConstruct(\"eeeeeeeeeeeeeeeeeeeeeeeeeeeef\", [\n    \"e\",\n    \"ee\",\n    \"eee\",\n    \"eeeee\",\n    \"eeeeee\",\n  ])\n);\n",
+              "tags": [""]
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/best_sum.js",
-              "name": "best_sum.js"
+              "name": "best_sum.js",
+              "solution": "\n\nfunction bestSum(targetSum, numbers, memo = {}) {\n  if (targetSum in memo) return memo[targetSum];\n  if (targetSum === 0) return [];\n  if (targetSum < 0) return null;\n\n  let shortestCombination = null;\n\n  for (let num of numbers) {\n    const remainder = targetSum - num;\n    const remainderResut = bestSum(remainder, numbers, memo);\n    if (remainderResut !== null) {\n      const combination = [...remainderResut, num];\n      console.log(combination);\n\n      if (\n        shortestCombination === null ||\n        combination.length < shortestCombination.length\n      ) {\n        shortestCombination = combination;\n      }\n    }\n  }\n\n  memo[targetSum] = shortestCombination;\n  return memo[targetSum];\n}\n\nconsole.log(bestSum(8, [2, 3, 5]));\nconsole.log(bestSum(300, [7, 14]));\n"
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/can_construct.js",
-              "name": "can_construct.js"
+              "name": "can_construct.js",
+              "solution": "\n\nfunction canConstruct(target, wordBank, memo = {}) {\n  if (target in memo) return memo[target];\n  if (target === \"\") return true;\n  for (let word of wordBank) {\n    if (target.indexOf(word) === 0) {\n      const suffix = target.slice(word.length);\n      if (canConstruct(suffix, wordBank, memo) === true) {\n        memo[target] = true;\n        return true;\n      }\n    }\n  }\n\n  memo[target] = false;\n  return false;\n}\n\nconsole.log(canConstruct(\"abcdef\", [\"ab\", \"abc\", \"cd\", \"def\", \"abcd\"]));\nconsole.log(\n  canConstruct(\"eeeeeeeeeeeeeeeeeeeeeeeeeeeef\", [\n    \"e\",\n    \"ee\",\n    \"eee\",\n    \"eeeee\",\n    \"eeeeee\",\n  ])\n);\n"
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/can_sum.js",
-              "name": "can_sum.js"
+              "name": "can_sum.js",
+              "solution": "\n\nfunction canSum(targetSum, numbers, memo = {}) {\n  if (targetSum in memo) return memo[targetSum];\n  if (targetSum === 0) return true;\n  if (targetSum < 0) return false;\n\n  for (let num of numbers) {\n    const remainder = targetSum - num;\n\n    if (canSum(remainder, numbers, memo) === true) {\n      memo[targetSum] = true;\n      return true;\n    }\n  }\n  memo[targetSum] = false;\n  return memo[targetSum];\n}\n\nconsole.log(canSum(8, [2, 3, 5]));\nconsole.log(canSum(300, [7, 14]));\n"
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/count_construct.js",
-              "name": "count_construct.js"
+              "name": "count_construct.js",
+              "solution": "\n\nfunction countConstruct(target, wordBank, memo = {}) {\n  if (target in memo) return memo[target];\n  if (target === \"\") return 1;\n\n  let totalCount = 0;\n  for (let word of wordBank) {\n    if (target.indexOf(word) === 0) {\n      const suffix = target.slice(word.length);\n      totalCount += countConstruct(suffix, wordBank, memo);\n    }\n  }\n\n  memo[target] = totalCount;\n  return totalCount;\n}\n\nconsole.log(countConstruct(\"abcdef\", [\"ab\", \"abc\", \"cd\", \"def\", \"abcd\"]));\nconsole.log(\n  countConstruct(\"eeeeeeeeeeeeeeeeeeeeeeeeeeeef\", [\n    \"e\",\n    \"ee\",\n    \"eee\",\n    \"eeeee\",\n    \"eeeeee\",\n  ])\n);\n"
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/fib_memo.js",
-              "name": "fib_memo.js"
+              "name": "fib_memo.js",
+              "solution": "\n\nfunction fib(n, memo = {}) {\n  if (n in memo) return memo[n];\n  if (n === 1 || n === 2) return 1;\n  memo[n] = fib(n - 1, memo) + fib(n - 2, memo);\n  return memo[n];\n}\n\nconst result = fib(67);\nconsole.log(result);\n"
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/grid_traveller.js",
-              "name": "grid_traveller.js"
+              "name": "grid_traveller.js",
+              "solution": "\n\nfunction gridTraveller(m, n, memo = {}) {\n  if (m === 1 && n === 1) return 1;\n  if (m === 0 || n === 0) return 0;\n\n  const pos = m + \",\" + n;\n  if (pos in memo) return memo[pos];\n\n  memo[pos] = gridTraveller(m - 1, n, memo) + gridTraveller(m, n - 1, memo);\n  return memo[pos];\n}\n\nconsole.log(gridTraveller(18, 18));\n"
             },
             {
               "path": "resources/Expert/Dynamic Progarmming/how_sum.js",
-              "name": "how_sum.js"
+              "name": "how_sum.js",
+              "solution": "\n\nfunction howSum(targetSum, numbers, memo = {}) {\n  if (targetSum in memo) return memo[targetSum];\n  if (targetSum === 0) return [];\n  if (targetSum < 0) return null;\n\n  for (let num of numbers) {\n    const remainder = targetSum - num;\n    const remainderResut = howSum(remainder, numbers, memo);\n    if (remainderResut !== null) {\n      memo[targetSum] = [...remainderResut, num];\n      return memo[targetSum];\n    }\n  }\n  memo[targetSum] = null;\n  return memo[targetSum];\n}\n\nconsole.log(howSum(8, [2, 3, 5]));\nconsole.log(howSum(300, [7, 14]));\n"
             }
           ]
         },
@@ -378,51 +451,64 @@
             {
               "path": "resources/Expert/Graph/clone_graph.js",
               "name": "clone_graph.js",
+              "docs": "\n\nGiven a reference of a node in a connected undirected graph.\n\nReturn a deep copy (clone) of the graph.\n\nEach node in the graph contains a value (int) and a list (List[Node]) of its neighbors.\n\nclass Node {\n    public int val;\n    public List<Node> neighbors;\n}\n \n\nTest case format:\n\nFor simplicity, each node's value is the same as the node's index (1-indexed). For example, the first node with val == 1, the second node with val == 2, and so on. The graph is represented in the test case using an adjacency list.\n\nAn adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a node in the graph.\n\nThe given node will always be the first node with val = 1. You must return the copy of the given node as a reference to the cloned graph.\n\n \n\nExample 1:\n\n\nInput: adjList = [[2,4],[1,3],[2,4],[1,3]]\nOutput: [[2,4],[1,3],[2,4],[1,3]]\nExplanation: There are 4 nodes in the graph.\n1st node (val = 1)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).\n2nd node (val = 2)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).\n3rd node (val = 3)'s neighbors are 2nd node (val = 2) and 4th node (val = 4).\n4th node (val = 4)'s neighbors are 1st node (val = 1) and 3rd node (val = 3).\nExample 2:\n\n\nInput: adjList = [[]]\nOutput: [[]]\nExplanation: Note that the input contains one empty list. The graph consists of only one node with val = 1 and it does not have any neighbors.\nExample 3:\n\nInput: adjList = []\nOutput: []\nExplanation: This an empty graph, it does not have any nodes.\nExample 4:\n\n\nInput: adjList = [[2],[1]]\nOutput: [[2],[1]]\n \n\nConstraints:\n\nThe number of nodes in the graph is in the range [0, 100].\n1 <= Node.val <= 100\nNode.val is unique for each node.\nThere are no repeated edges and no self-loops in the graph.\nThe Graph is connected and all nodes can be visited starting from the given node. \n\n",
+              "solution": "\n\nvar cloneGraph = function (node) {\n  // If start node is null than we can't do any cloning\n  let start = node;\n  if (start === null) return null;\n  // vertexMap is the original node reference to our node\n  const vertexMap = new Map();\n\n  // Add the start node to the queue. Give the start node a clone in the vertex map\n  const queue = [start];\n  vertexMap.set(start, new Node(start.val));\n\n  /*\n   * Breadth first search continues unitil we process all the vertices in the graph\n   * In the original graph. We know this is done when queue is empty\n   */\n\n  while (queue.length > 0) {\n    // We grab a node. We will express all of the edges coming off of this node.\n    const currentVertex = queue.shift();\n    // Iterate over all adjacents.\n    for (const neighbor of currentVertex.neighbors) {\n      // Has this neighbor been given a clone?\n      if (!vertexMap.has(neighbor)) {\n        /*\n         * No? Give it a mapping and add the original neighbor to the search queue so we\n         * can express ITS edges later\n         */\n        vertexMap.set(neighbor, new Node(neighbor.val));\n        queue.push(neighbor);\n      }\n\n      /*\n       * Draw the edge from currVertex's clone to neighbor's clone. Do you see how our\n       * hashtable makes this quick access possible?\n       */\n      vertexMap.get(currentVertex).neighbors.push(vertexMap.get(neighbor));\n    }\n  }\n  return vertexMap.get(start);\n};\n",
               "tags": ["Microsoft"]
             },
             {
               "path": "resources/Expert/Graph/connected_components_count.js",
-              "name": "connected_components_count.js"
+              "name": "connected_components_count.js",
+              "solution": "\n\nfunction connectedComponentsCount(graph) {\n  const visited = new Set();\n  let count = 0;\n  for (let node in graph) {\n    if (explore(graph, node, visited) === true) {\n      count += 1;\n    }\n  }\n  return count;\n}\n\nfunction explore(graph, current, visited) {\n  if (visited.has(String(current)) === true) return false;\n  visited.add(String(current));\n\n  for (let neighbor of graph[current]) {\n    explore(graph, neighbor, visited);\n  }\n\n  return true;\n}\n\nconst result = connectedComponentsCount({\n  0: [8, 1, 5],\n  1: [0],\n  5: [0, 8],\n  8: [0, 5],\n  2: [3, 4],\n  3: [2, 4],\n  4: [3, 2],\n}); // -> 2\n\nconsole.log(result);\n"
             },
             {
               "path": "resources/Expert/Graph/course_schedule.js",
-              "name": "course_schedule.js"
+              "name": "course_schedule.js",
+              "solution": "\n\nvar canFinish = function (numCourses, prerequisites) {\n  const graph = prerequisites.reduce((acc, [from, to]) => {\n    if (!acc[from]) acc[from] = [];\n    if (!acc[to]) acc[to] = [];\n\n    acc[from].push(to);\n    return acc;\n  }, {});\n\n  const visited = {};\n  let visiting = {};\n\n  const isCyclic = (course) => {\n    if (visiting[course]) return true;\n    visiting[course] = true;\n\n    for (let i = 0; i < graph[course].length; i++) {\n      if (!visited[course] && isCyclic(graph[course][i])) {\n        return true;\n      }\n    }\n\n    visiting[course] = false;\n    visited[course] = true;\n    return false;\n  };\n\n  for (let course in graph) {\n    if (isCyclic(course)) return false;\n  }\n\n  return true;\n};\n\nfunction buildGraph(edges) {\n  const graph = {};\n  for (let edge of edges) {\n    if (!(edge[0] in graph)) graph[edge[0]] = [];\n    if (!(edge[1] in graph)) graph[edge[1]] = [];\n    graph[edge[0]].push(edge[1]);\n    graph[edge[1]].push(edge[0]);\n  }\n  return graph;\n}\n\n/**\n * @param {number} numCourses\n * @param {number[][]} prerequisites\n * @return {boolean}\n */\nvar canFinish = function (numCourses, prerequisites) {\n  const indegree = new Array(numCourses).fill(0);\n  const queue = [];\n  /**\n   * The goal is to find whether the course graph has cycles.\n   *\n   * We are looking for the number of indgree for each course and\n   * put the course with no indegree into the queue. As we go\n   * through the courses in queue, we break off the dependency(edge)\n   * from the current course in queue in all the prerequisite\n   * pairs. Then we put all the courses with zero indegree into\n   * the queue. Repeat until the queue is empty. We maintain a\n   * count and increment it each time we pop the queue. The count\n   * will equal to the number of courses when there's no cycle and it\n   * is possible to take all the courses.\n   *\n   * directed graph denotes: [prereq] --> [course]\n   */\n  for (const [course, prereq] of prerequisites) {\n    indegree[course] += 1;\n  }\n  for (let i = 0; i < indegree.length; i++) {\n    if (indegree[i] === 0) {\n      queue.push(i);\n    }\n  }\n  let count = 0;\n\n  while (queue.length !== 0) {\n    const c = queue.pop();\n    count += 1;\n\n    for (const [course, prereq] of prerequisites) {\n      if (prereq === c) {\n        indegree[course] -= 1;\n        if (indegree[course] === 0) {\n          queue.push(course);\n        }\n      }\n    }\n  }\n  return count === numCourses;\n};\n"
             },
             {
               "path": "resources/Expert/Graph/find_graph_is_sequential.js",
-              "name": "find_graph_is_sequential.js"
+              "name": "find_graph_is_sequential.js",
+              "solution": "\n\nfunction solution(N, A, B) {\n  const graph = build(A, B);\n  let start = 1;\n  console.log(graph);\n  while (start < N) {\n    const key = `${start}`;\n    const next = `${start + 1}`;\n    if (!graph[key] || !graph[key].includes(next)) return false;\n    start++;\n  }\n  return true;\n}\n\nfunction build(A, B) {\n  const graph = {};\n  for (let i = 0; i < A.length; i++) {\n    const first = `${A[i]}`;\n    const next = `${B[i]}`;\n    if (!graph[first]) graph[first] = [];\n    if (!graph[next]) graph[next] = [];\n    graph[first].push(next);\n    graph[next].push(first);\n  }\n  return graph;\n}\n"
             },
             {
               "path": "resources/Expert/Graph/graph_bfs.js",
-              "name": "graph_bfs.js"
+              "name": "graph_bfs.js",
+              "solution": "\n\nfunction bfs(graph, source) {\n  const queue = [source];\n\n  while (queue.length > 0) {\n    const current = queue.shift();\n    console.log(current);\n\n    for (let neighbor of graph[current]) {\n      queue.push(neighbor);\n    }\n  }\n}\n\nconst graph = {\n  a: [\"c\", \"b\"],\n  b: [\"d\"],\n  c: [\"e\"],\n  d: [\"f\"],\n  e: [],\n  f: [],\n};\n\nbfs(graph, \"a\");\n"
             },
             {
               "path": "resources/Expert/Graph/graph_dfs.js",
-              "name": "graph_dfs.js"
+              "name": "graph_dfs.js",
+              "solution": "\n\nfunction dfs(graph, source) {\n  const statck = [source];\n\n  while (statck.length > 0) {\n    const current = statck.pop();\n\n    console.log(current);\n    for (let neighbor of graph[current]) {\n      statck.push(neighbor);\n    }\n  }\n}\n\nfunction dfs_recursion(graph, source) {\n  console.log(source);\n\n  for (let neighbor of graph[source]) {\n    dfs_recursion(graph, neighbor);\n  }\n}\n\nconst graph = {\n  a: [\"c\", \"b\"],\n  b: [\"d\"],\n  c: [\"e\"],\n  d: [\"f\"],\n  e: [],\n  f: [],\n};\n\ndfs(graph, \"a\");\nconsole.log(\"------------------\");\ndfs_recursion(graph, \"a\");\n"
             },
             {
               "path": "resources/Expert/Graph/hasPath.js",
-              "name": "hasPath.js"
+              "name": "hasPath.js",
+              "solution": "\n\nfunction hasPath_dfs(graph, source, destination) {\n  if (source === destination) return true;\n\n  for (let neighbor of graph[source]) {\n    if (hasPath_dfs(graph, neighbor, destination) === true) {\n      return true;\n    }\n  }\n\n  return false;\n}\n\nfunction hasPath_bfs(graph, source, destination) {\n  const queue = [source];\n\n  while (queue.length > 0) {\n    const current = queue.shift();\n    if (current === destination) return true;\n\n    for (let neighbor of graph[current]) {\n      queue.push(neighbor);\n    }\n  }\n\n  return false;\n}\nconst graph = {\n  f: [\"g\", \"i\"],\n  g: [\"h\"],\n  h: [],\n  i: [\"g\", \"k\"],\n  j: [\"i\"],\n  k: [],\n};\n\nconsole.log(hasPath_dfs(graph, \"f\", \"k\")); // true\nconsole.log(hasPath_bfs(graph, \"f\", \"k\")); // true\n"
             },
             {
               "path": "resources/Expert/Graph/island_count.js",
-              "name": "island_count.js"
+              "name": "island_count.js",
+              "solution": "\n\nfunction islandCount(graph) {\n  const visited = new Set();\n\n  let count = 0;\n  for (let r = 0; r < grid.length; r++) {\n    for (let c = 0; c < grid[0].length; c++) {\n      if (explore(grid, r, c, visited) === true) {\n        count += 1;\n      }\n    }\n  }\n  return count;\n}\n\nfunction explore(grid, r, c, visited) {\n  const rowInbound = 0 <= r && r < grid.length;\n  const colInbound = 0 <= c && c < grid[0].length;\n  if (!rowInbound || !colInbound) return false;\n\n  if (grid[r][c] === \"W\") return false;\n\n  const pos = r + \",\" + c;\n  if (visited.has(pos)) return false;\n  visited.add(pos);\n\n  explore(grid, r - 1, c, visited);\n  explore(grid, r + 1, c, visited);\n  explore(grid, r, c - 1, visited);\n  explore(grid, r, c + 1, visited);\n\n  return true;\n}\n\nconst grid = [\n  [\"W\", \"L\", \"W\", \"W\", \"W\"],\n  [\"W\", \"L\", \"W\", \"W\", \"W\"],\n  [\"W\", \"W\", \"W\", \"L\", \"W\"],\n  [\"W\", \"W\", \"L\", \"L\", \"W\"],\n  [\"L\", \"W\", \"W\", \"L\", \"L\"],\n  [\"L\", \"L\", \"W\", \"W\", \"W\"],\n];\n\nconst result = islandCount(grid); // -> 3\nconsole.log(result);\n"
             },
             {
               "path": "resources/Expert/Graph/largest_component.js",
-              "name": "largest_component.js"
+              "name": "largest_component.js",
+              "solution": "\n\nfunction largestComponent(graph) {\n  const visited = new Set();\n  let largest = 0;\n  for (let node in graph) {\n    const size = explore(graph, node, visited);\n    if (size > largest) {\n      largest = size;\n    }\n  }\n  return largest;\n}\n\nfunction explore(graph, current, visited) {\n  if (visited.has(String(current)) === true) return 0;\n  visited.add(String(current));\n\n  let count = 1;\n  for (let neighbor of graph[current]) {\n    count += explore(graph, neighbor, visited);\n  }\n\n  return count;\n}\n\nconst result = largestComponent({\n  0: [8, 1, 5],\n  1: [0],\n  5: [0, 8],\n  8: [0, 5],\n  2: [3, 4],\n  3: [2, 4],\n  4: [3, 2],\n}); // -> 4\n\nconsole.log(result);\n"
             },
             {
               "path": "resources/Expert/Graph/minIsland.js",
-              "name": "minIsland.js"
+              "name": "minIsland.js",
+              "solution": "\n\nfunction minIsland(graph) {\n  const visited = new Set();\n  let minSize = Infinity;\n  for (let r = 0; r < grid.length; r++) {\n    for (let c = 0; c < grid[0].length; c++) {\n      const size = explore(grid, r, c, visited);\n      if (size > 0 && minSize > size) {\n        minSize = size;\n      }\n    }\n  }\n  return minSize;\n}\n\nfunction explore(grid, r, c, visited) {\n  const rowInbound = 0 <= r && r < grid.length;\n  const colInbound = 0 <= c && c < grid[0].length;\n  if (!rowInbound || !colInbound) return 0;\n\n  if (grid[r][c] === \"W\") return 0;\n\n  const pos = r + \",\" + c;\n  if (visited.has(pos)) return 0;\n  visited.add(pos);\n\n  let size = 1;\n\n  size += explore(grid, r - 1, c, visited);\n  size += explore(grid, r + 1, c, visited);\n  size += explore(grid, r, c - 1, visited);\n  size += explore(grid, r, c + 1, visited);\n\n  return size;\n}\n\nconst grid = [\n  [\"W\", \"L\", \"W\", \"W\", \"W\"],\n  [\"W\", \"L\", \"W\", \"W\", \"W\"],\n  [\"W\", \"W\", \"W\", \"L\", \"W\"],\n  [\"W\", \"W\", \"L\", \"L\", \"W\"],\n  [\"L\", \"W\", \"W\", \"L\", \"L\"],\n  [\"L\", \"L\", \"W\", \"W\", \"W\"],\n];\n\nconst result = minIsland(grid); // -> 3\nconsole.log(result);\n"
             },
             {
               "path": "resources/Expert/Graph/shortest_path.js",
-              "name": "shortest_path.js"
+              "name": "shortest_path.js",
+              "solution": "\n\nfunction shortestPath(edges, source, destination) {\n  const graph = buildGraph(edges);\n  console.log(graph);\n  const visited = new Set([source]);\n  const queue = [[source, 0]];\n\n  while (queue.length > 0) {\n    const [node, distance] = queue.shift();\n\n    if (node === destination) return distance;\n    for (let neighbor of graph[node]) {\n      if (!visited.has(neighbor)) {\n        visited.add(neighbor);\n        queue.push([neighbor, distance + 1]);\n      }\n    }\n  }\n  return -1;\n}\n\nfunction buildGraph(edges) {\n  const graph = {};\n  for (let edge of edges) {\n    if (!(edge[0] in graph)) graph[edge[0]] = [];\n    if (!(edge[1] in graph)) graph[edge[1]] = [];\n    graph[edge[0]].push(edge[1]);\n    graph[edge[1]].push(edge[0]);\n  }\n  return graph;\n}\n\nconst edges = [\n  [\"w\", \"x\"],\n  [\"x\", \"y\"],\n  [\"z\", \"y\"],\n  [\"z\", \"v\"],\n  [\"w\", \"v\"],\n];\n\nconst result = shortestPath(edges, \"w\", \"z\"); // -> 2\nconsole.log(result);\n"
             },
             {
               "path": "resources/Expert/Graph/undirected_path.js",
-              "name": "undirected_path.js"
+              "name": "undirected_path.js",
+              "solution": "\n\nfunction undirectedPath(edges, source, destination) {\n  const graph = buildGraph(edges);\n  console.log(graph);\n  const visited = new Set();\n  return hasPath_dfs(graph, source, destination, visited);\n}\n\nfunction buildGraph(edges) {\n  const graph = {};\n  for (let edge of edges) {\n    if (!(edge[0] in graph)) graph[edge[0]] = [];\n    if (!(edge[1] in graph)) graph[edge[1]] = [];\n    graph[edge[0]].push(edge[1]);\n    graph[edge[1]].push(edge[0]);\n  }\n  return graph;\n}\n\nfunction hasPath_dfs(graph, source, destination, visited) {\n  if (source === destination) return true;\n  if (visited.has(source)) return false;\n  visited.add(source);\n\n  for (let neighbor of graph[source]) {\n    if (hasPath_dfs(graph, neighbor, destination, visited) === true) {\n      return true;\n    }\n  }\n\n  return false;\n}\n\nconst edges = [\n  [\"i\", \"j\"],\n  [\"k\", \"i\"],\n  [\"m\", \"k\"],\n  [\"k\", \"l\"],\n  [\"o\", \"n\"],\n];\n\nconsole.log(undirectedPath(edges, \"j\", \"m\")); // -> true\n"
             }
           ]
         }
@@ -438,46 +524,71 @@
           "children": [
             {
               "path": "resources/Intermediate/LinkedList/add_two_numbers_1.js",
-              "name": "add_two_numbers_1.js"
+              "name": "add_two_numbers_1.js",
+              "docs": "\n\nYou are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.\n\n\n\nExample 1:\n\n\nInput: l1 = [2,4,3], l2 = [5,6,4]\nOutput: [7,0,8]\nExplanation: 342 + 465 = 807.\nExample 2:\n\nInput: l1 = [0], l2 = [0]\nOutput: [0]\nExample 3:\n\nInput: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]\nOutput: [8,9,9,9,0,0,0,1]\n\n\nConstraints:\n\nThe number of nodes in each linked list is in the range [1, 100].\n0 <= Node.val <= 9\nIt is guaranteed that the list represents a number that does not have leading zeros.\n\n\n",
+              "solution": "\n\nvar addTwoNumbers = function (l1, l2) {\n  var List = new ListNode(0);\n  var head = List;\n  var sum = 0;\n  var carry = 0;\n\n  while (l1 !== null || l2 !== null || sum > 0) {\n    if (l1 !== null) {\n      sum = sum + l1.val;\n      l1 = l1.next;\n    }\n    if (l2 !== null) {\n      sum = sum + l2.val;\n      l2 = l2.next;\n    }\n    if (sum >= 10) {\n      carry = 1;\n      sum = sum - 10;\n    }\n\n    head.next = new ListNode(sum);\n    head = head.next;\n\n    sum = carry;\n    carry = 0;\n  }\n\n  return List.next;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Intermediate/LinkedList/add_two_numbers_2.js",
               "name": "add_two_numbers_2.js",
+              "docs": "\n\nhttps://leetcode.com/problems/add-two-numbers-ii/\n  \nYou are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.\n\n \n\nExample 1:\n\n\nInput: l1 = [7,2,4,3], l2 = [5,6,4]\nOutput: [7,8,0,7]\nExample 2:\n\nInput: l1 = [2,4,3], l2 = [5,6,4]\nOutput: [8,0,7]\n\n\n \n",
+              "solution": "\n\nvar addTwoNumbers = function (l1, l2) {\n  let l1Len = getLen(l1);\n  let l2Len = getLen(l2);\n  let offset = Math.abs(l1Len - l2Len);\n  if (l2Len > l1Len) [l1, l2] = [l2, l1]; // l1 will always be the longer one\n  let dummyHead = new ListNode(0);\n  dummyHead.val = getCarry(l1, l2, dummyHead, offset);\n\n  return dummyHead.val == 1 ? dummyHead : dummyHead.next;\n};\n\n/**\n * @param {ListNode} l1\n * @param {ListNode} l2\n * @param {ListNode} node\n * @param {Number} offset\n */\nfunction getCarry(l1, l2, node, offset) {\n  if (l1 == null || l2 == null) return 0;\n  node.next = new ListNode(0);\n  let sum = 0;\n  if (offset > 0) sum = l1.val + getCarry(l1.next, l2, node.next, offset - 1);\n  else\n    sum = l1.val + l2.val + getCarry(l1.next, l2.next, node.next, offset - 1);\n\n  node.next.val = sum % 10;\n  return parseInt(sum / 10); // return the carry\n}\n\n/**\n * @param {ListNode} root\n */\nfunction getLen(root) {\n  let len = 0;\n  while (root) {\n    len++;\n    root = root.next;\n  }\n  return len;\n}\n",
               "tags": ["Microsoft"]
             },
             {
               "path": "resources/Intermediate/LinkedList/copy_linked_list_with_random.js",
-              "name": "copy_linked_list_with_random.js"
+              "name": "copy_linked_list_with_random.js",
+              "docs": "\n\nA linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null.\n\nConstruct a deep copy of the list. The deep copy should consist of exactly n brand new nodes, where each new node has its value set to the value of its corresponding original node. Both the next and random pointer of the new nodes should point to new nodes in the copied list such that the pointers in the original list and copied list represent the same list state. None of the pointers in the new list should point to nodes in the original list.\n\nFor example, if there are two nodes X and Y in the original list, where X.random --> Y, then for the corresponding two nodes x and y in the copied list, x.random --> y.\n\nReturn the head of the copied linked list.\n\nThe linked list is represented in the input/output as a list of n nodes. Each node is represented as a pair of [val, random_index] where:\n\nval: an integer representing Node.val\nrandom_index: the index of the node (range from 0 to n-1) that the random pointer points to, or null if it does not point to any node.\nYour code will only be given the head of the original linked list.\n\n\n\nExample 1:\n\n\nInput: head = [[7,null],[13,0],[11,4],[10,2],[1,0]]\nOutput: [[7,null],[13,0],[11,4],[10,2],[1,0]]\nExample 2:\n\n\nInput: head = [[1,1],[2,1]]\nOutput: [[1,1],[2,1]]\nExample 3:\n\n\n\nInput: head = [[3,null],[3,0],[3,null]]\nOutput: [[3,null],[3,0],[3,null]]\n\n\nConstraints:\n\n0 <= n <= 1000\n-104 <= Node.val <= 104\nNode.random is null or is pointing to some node in the linked list.\n\n\n",
+              "solution": "\n\nvar copyRandomList = function (head) {\n  if (!head) {\n    return null;\n  }\n  const clones = new Map();\n\n  let n = head;\n  while (n) {\n    clones.set(n, new Node(n.val));\n    n = n.next;\n  }\n  n = head;\n  while (n) {\n    clones.get(n).next = clones.get(n.next) || null;\n    clones.get(n).random = clones.get(n.random) || null;\n    n = n.next;\n  }\n  return clones.get(head);\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Intermediate/LinkedList/intersection_of_two_linked_list.js",
               "name": "intersection_of_two_linked_list.js",
-              "tags": ["Microsoft"]
+              "docs": "\n\nGiven the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.\n\nFor example, the following two linked lists begin to intersect at node c1:\n\n\nThe test cases are generated such that there are no cycles anywhere in the entire linked structure.\n\nNote that the linked lists must retain their original structure after the function returns.\n\nCustom Judge:\n\nThe inputs to the judge are given as follows (your program is not given these inputs):\n\nintersectVal - The value of the node where the intersection occurs. This is 0 if there is no intersected node.\nlistA - The first linked list.\nlistB - The second linked list.\nskipA - The number of nodes to skip ahead in listA (starting from the head) to get to the intersected node.\nskipB - The number of nodes to skip ahead in listB (starting from the head) to get to the intersected node.\nThe judge will then create the linked structure based on these inputs and pass the two heads, headA and headB to your program. If you correctly return the intersected node, then your solution will be accepted.\n\n\n\nExample 1:\n\n\nInput: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3\nOutput: Intersected at '8'\nExplanation: The intersected node's value is 8 (note that this must not be 0 if the two lists intersect).\nFrom the head of A, it reads as [4,1,8,4,5]. From the head of B, it reads as [5,6,1,8,4,5]. There are 2 nodes before the intersected node in A; There are 3 nodes before the intersected node in B.\nExample 2:\n\n\nInput: intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1\nOutput: Intersected at '2'\nExplanation: The intersected node's value is 2 (note that this must not be 0 if the two lists intersect).\nFrom the head of A, it reads as [1,9,1,2,4]. From the head of B, it reads as [3,2,4]. There are 3 nodes before the intersected node in A; There are 1 node before the intersected node in B.\nExample 3:\n\n\nInput: intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2\nOutput: No intersection\nExplanation: From the head of A, it reads as [2,6,4]. From the head of B, it reads as [1,5]. Since the two lists do not intersect, intersectVal must be 0, while skipA and skipB can be arbitrary values.\nExplanation: The two lists do not intersect, so return null.\n\n\nConstraints:\n\nThe number of nodes of listA is in the m.\nThe number of nodes of listB is in the n.\n1 <= m, n <= 3 * 104\n1 <= Node.val <= 105\n0 <= skipA < m\n0 <= skipB < n\nintersectVal is 0 if listA and listB do not intersect.\nintersectVal == listA[skipA] == listB[skipB] if listA and listB intersect. \n",
+              "solution": "\n\nvar getIntersectionNode = function (headA, headB) {\n  let a = headA,\n    b = headB;\n  while (a !== b) {\n    a = !a ? headB : a.next;\n    b = !b ? headA : b.next;\n  }\n  return a;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Intermediate/LinkedList/merge_and_sort_all_linked_list.js",
-              "name": "merge_and_sort_all_linked_list.js"
+              "name": "merge_and_sort_all_linked_list.js",
+              "docs": "\n\n\nmerge an n sorted list\n\n\n\n",
+              "solution": "\n\nvar mergeKLists = function (lists) {\n  if (!lists.length) return null;\n\n  function mergeTwoLists(a, b) {\n    const dummyHead = new ListNode();\n    let curA = a,\n      curB = b,\n      curD = dummyHead;\n\n    while (curA && curB) {\n      if (curA.val < curB.val) {\n        curD.next = curA;\n        curA = curA.next;\n      } else {\n        curD.next = curB;\n        curB = curB.next;\n      }\n      curD = curD.next;\n    }\n    if (curA) curD.next = curA;\n    if (curB) curD.next = curB;\n    return dummyHead.next;\n  }\n\n  while (lists.length > 1) {\n    const a = lists.shift();\n    const b = lists.shift();\n    const res = mergeTwoLists(a, b);\n    lists.push(res);\n  }\n  return lists[0];\n};\n"
             },
             {
               "path": "resources/Intermediate/LinkedList/merge_k_sorted_list.js",
               "name": "merge_k_sorted_list.js",
+              "docs": "\n\nYou are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\n\nMerge all the linked-lists into one sorted linked-list and return it.\n\n \n\nExample 1:\n\nInput: lists = [[1,4,5],[1,3,4],[2,6]]\nOutput: [1,1,2,3,4,4,5,6]\nExplanation: The linked-lists are:\n[\n  1->4->5,\n  1->3->4,\n  2->6\n]\nmerging them into one sorted list:\n1->1->2->3->4->4->5->6\nExample 2:\n\nInput: lists = []\nOutput: []\nExample 3:\n\nInput: lists = [[]]\nOutput: []\n \n\nConstraints:\n\nk == lists.length\n0 <= k <= 10^4\n0 <= lists[i].length <= 500\n-10^4 <= lists[i][j] <= 10^4\nlists[i] is sorted in ascending order.\nThe sum of lists[i].length won't exceed 10^4. \n\n",
+              "solution": "\n\nvar mergeKLists_compare_one_by_one = function (lists) {\n  if (!lists || !lists.length) return null;\n  const findMinNode = (lists = lists) => {\n    let index = -1,\n      min = Number.MAX_SAFE_INTEGER;\n    for (let i = 0; i < lists.length; i++) {\n      if (!lists[i]) continue;\n      if (lists[i].val <= min) {\n        min = lists[i].val;\n        index = i;\n      }\n    }\n\n    let resNode = null;\n    if (index !== -1) {\n      resNode = lists[index];\n      lists[index] = lists[index].next;\n    }\n    return resNode;\n  };\n\n  let res = new ListNode(-1),\n    cur = res,\n    temp = findMinNode(lists);\n  while (temp) {\n    cur.next = temp;\n    cur = cur.next;\n    temp = findMinNode(lists);\n  }\n  return res.next;\n};\n",
               "tags": ["Microsoft"]
             },
             {
               "path": "resources/Intermediate/LinkedList/merge_two_sorted_list.js",
-              "name": "merge_two_sorted_list.js"
+              "name": "merge_two_sorted_list.js",
+              "docs": "\n\nYou are given the heads of two sorted linked lists list1 and list2.\n\nMerge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.\n\nReturn the head of the merged linked list.\n\n \n\nExample 1:\n\n\nInput: list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]\nExample 2:\n\nInput: list1 = [], list2 = []\nOutput: []\nExample 3:\n\nInput: list1 = [], list2 = [0]\nOutput: [0]\n \n\nConstraints:\n\nThe number of nodes in both lists is in the range [0, 50].\n-100 <= Node.val <= 100\nBoth list1 and list2 are sorted in non-decreasing order. \n\n",
+              "solution": "\n\nvar mergeTwoLists = function (l1, l2) {\n  var mergedHead = { val: -1, next: null },\n    crt = mergedHead;\n  while (l1 && l2) {\n    if (l1.val > l2.val) {\n      crt.next = l2;\n      l2 = l2.next;\n    } else {\n      crt.next = l1;\n      l1 = l1.next;\n    }\n    crt = crt.next;\n  }\n  crt.next = l1 || l2;\n\n  return mergedHead.next;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Intermediate/LinkedList/reverse_linked_list.js",
-              "name": "reverse_linked_list.js"
+              "name": "reverse_linked_list.js",
+              "docs": "\n\n    Given an linked list reverse it with no additional space\n\n\n",
+              "solution": "\n\nfunction reverseLinkedList(node) {\n  let newNode = {};\n  let prevNode = null;\n  while (node !== null) {\n    if (Object.keys(newNode).length === 0) {\n      newNode.value = node.value;\n      newNode.next = null;\n    }\n    newNode = {\n      value: node.value,\n      next: newNode,\n    };\n    node = node.next;\n  }\n\n  return newNode;\n}\n\n// Time Complexity: O(n), Linear - traverse linked list only once\n// Space Complexity: O(1), Constant - we will only have 2 pointers regardless of size of input; prev and temp\n\nvar reverseList = function (head) {\n  // End of the reversed linked list set to null\n  let prev = null;\n\n  // Traverse through the given linked list\n  while (head) {\n    const temp = head.next; // References the next Node of given linked list\n    head.next = prev; // head.next point to previous Node, instead of the next Node of the given linked list\n    prev = head; // Move the prev Node pointer up to head\n    head = temp; // Move the head up to next Node of the given linked list\n  }\n\n  // Prev is the reversed linked list\n  return prev;\n};\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Intermediate/LinkedList/reverse_node_of_K_group.js",
-              "name": "reverse_node_of_K_group.js"
+              "name": "reverse_node_of_K_group.js",
+              "docs": "\n\nGiven the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.\n\nk is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.\n\nYou may not alter the values in the list's nodes, only nodes themselves may be changed.\n\n\n\nExample 1:\n\n\nInput: head = [1,2,3,4,5], k = 2\nOutput: [2,1,4,3,5]\nExample 2:\n\n\nInput: head = [1,2,3,4,5], k = 3\nOutput: [3,2,1,4,5]\n\n\nConstraints:\n\nThe number of nodes in the list is n.\n1 <= k <= n <= 5000\n0 <= Node.val <= 1000\n\n\n",
+              "solution": "\n\nfunction reverseKGroup(head, k) {\n  if (!head) return null;\n  var tail = head;\n  for (var i = 1; i < k; i++) {\n    tail = tail.next;\n    if (!tail) return head;\n  }\n  var next = tail.next;\n  tail.next = null;\n  reverse(head);\n  head.next = reverseKGroup(next, k);\n  return tail;\n}\n\nfunction reverse(curr) {\n  var prev = null;\n  while (curr) {\n    var next = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = next;\n  }\n  return prev;\n}\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Intermediate/LinkedList/validate_cyclic.js",
               "name": "validate_cyclic.js",
+              "docs": "\n\nGiven head, the head of a linked list, determine if the linked list has a cycle in it.\n\nThere is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.\n\nReturn true if there is a cycle in the linked list. Otherwise, return false.\n\nInput: head = [3,2,0,-4], pos = 1\nOutput: true\nExplanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).\nExample 2:\n\n\nInput: head = [1,2], pos = 0\nOutput: true\nExplanation: There is a cycle in the linked list, where the tail connects to the 0th node.\nExample 3:\n\n\nInput: head = [1], pos = -1\nOutput: false\nExplanation: There is no cycle in the linked list.\n \n\nConstraints:\n\nThe number of the nodes in the list is in the range [0, 104].\n-105 <= Node.val <= 105\npos is -1 or a valid index in the linked-list.\n \n\n",
+              "solution": "\n\nvar hasCycle = function (head) {\n  // if(!head) return false;\n  //   while(head){\n  //       if(head.val===\"checked\") return true;\n  //       head.val=\"checked\";\n  //       head=head.next;\n  //   }\n  //   return false;\n\n  let visited = new Set();\n\n  while (head !== null) {\n    if (visited.has(head.val)) return true;\n    visited.add(head.val);\n    head = head.next;\n  }\n  return false;\n};\n\nconst hasCycle = (head) => {\n  let p1 = head;\n  let p2 = head;\n\n  while (p2 && p2.next && p2.next.next) {\n    p1 = p1.next;\n    p2 = p2.next.next;\n\n    if (p1 === p2) {\n      return true;\n    }\n  }\n\n  return false;\n};\n",
               "tags": ["Microsoft"]
             }
           ]
@@ -488,15 +599,24 @@
           "children": [
             {
               "path": "resources/Intermediate/Search/binary_search.js",
-              "name": "binary_search.js"
+              "name": "binary_search.js",
+              "docs": "\r\n \r\nGiven an array search it using binary search\r\n\r\npre-requsit - array has to be sorted**\r\ncan return index / item\r\nsearch for an item and returns its index \r\n0(log n) - time complexity\r\n\r\n\r\n",
+              "solution": "\r\n\r\nconst arr_num = [-10, 15, 21, 33, 42, 50, 55, 61, 77, 89];\r\nfunction binary_search(arr, searchItem) {\r\n  let left = 0;\r\n  let right = arr.length - 1;\r\n\r\n  while (left <= right) {\r\n    const midpoint = Math.floor((left + right) / 2);\r\n    if (arr[midpoint] === searchItem) {\r\n      return midpoint;\r\n    } else if (arr[midpoint] < searchItem) {\r\n      left = midpoint + 1;\r\n    } else {\r\n      right = midpoint - 1;\r\n    }\r\n  }\r\n  return null;\r\n}\r\n\r\nconst search_index = binary_search(arr_num, -10);\r\nconsole.log(\"binary_search item index: \", search_index);\r\n",
+              "tags": [""]
             },
             {
               "path": "resources/Intermediate/Search/binary_search_recursion.js",
-              "name": "binary_search_recursion.js"
+              "name": "binary_search_recursion.js",
+              "docs": "\r\n \r\n\r\nGiven an array search it using binary search using recursion\r\n\r\npre-requsit - array has to be sorted**\r\ncan return the item / exist or not / index cannot be returned\r\nsearch for an item and returns its index \r\n0(log n) - time complexity\r\n\r\n\r\n",
+              "solution": "\r\n\r\nconst arr_num = [10, 15, 21, 33, 42, 50, 55, 61, 77, 89];\r\nfunction binary_search_recursion(arr, searchItem) {\r\n  const midpoint = Math.floor(arr.length / 2);\r\n  if (arr[midpoint] === searchItem) {\r\n    return true;\r\n  }\r\n\r\n  while (arr.length > 1) {\r\n    if (arr[midpoint] < searchItem) {\r\n      return binary_search_recursion(arr.slice(midpoint + 1), searchItem);\r\n    } else {\r\n      return binary_search_recursion(arr.slice(0, midpoint), searchItem);\r\n    }\r\n  }\r\n  return false;\r\n}\r\n\r\nconst search_index = binary_search_recursion(arr_num, 10);\r\nconsole.log(\"binary_recursion_search item index: \", search_index);\r\n",
+              "tags": [""]
             },
             {
               "path": "resources/Intermediate/Search/linear_search.js",
-              "name": "linear_search.js"
+              "name": "linear_search.js",
+              "docs": "\r\n \r\nGiven an array search it using linear search\r\n\r\nsearch for an item and returns its index \r\n0(n) - time complexity\r\n\r\n",
+              "solution": "\r\n\r\nconst arr_num = [10, 90, 65, 12, 55, 72, 11, 8];\r\nfunction linear_search(arr, searchItem) {\r\n  for (let i = 0; i <= arr.length - 1; i++) {\r\n    if (arr[i] === searchItem) {\r\n      return i;\r\n    }\r\n  }\r\n}\r\n\r\nconst search_index = linear_search(arr_num, 555);\r\nconsole.log(\"linear_search item index: \", search_index);\r\n",
+              "tags": [""]
             }
           ]
         },
@@ -506,19 +626,31 @@
           "children": [
             {
               "path": "resources/Intermediate/Sort/insertion_sort.js",
-              "name": "insertion_sort.js"
+              "name": "insertion_sort.js",
+              "docs": "\r\n\r\n \r\nGiven an array sort it using insertion sort\r\n\r\nO(n2) - worst case- time complexity\r\ntakes 2nd item compare to all others prior and shift all the elements to right and assign the value to the position where current value is greater than left\r\n\r\n\r\n",
+              "solution": "\r\n\r\nconst arr_num = [21, 10, 90, 65, 12, 55, 72, 11, 8];\r\nfunction insertion_sort(arr) {\r\n  for (let i = 1; i <= arr.length - 1; i++) {\r\n    const current = arr[i];\r\n    let j = i - 1;\r\n    while (j >= 0 && arr[j] > current) {\r\n      arr[j + 1] = arr[j];\r\n      j--;\r\n    }\r\n    arr[j + 1] = current;\r\n  }\r\n\r\n  return arr;\r\n}\r\n\r\nconsole.log(\"insertion_sort item:\", insertion_sort(arr_num));\r\n",
+              "tags": [""]
             },
             {
               "path": "resources/Intermediate/Sort/merge_sort.js",
-              "name": "merge_sort.js"
+              "name": "merge_sort.js",
+              "docs": "\r\n \r\nGiven an array sort it using merge sort\r\n\r\nO(n log n) - worst case- time complexity\r\ntakes middle as a pivot,  splits left and right  until its array of length 1 and compares the next array. combines both and so on in recursion\r\n\r\n\r\n",
+              "solution": "\r\n\r\nconst arr_num = [21, 10, 90, 65, 12, 55, 72, 11, 8, 101, 0, 21, 1];\r\nfunction merge_sort(arr) {\r\n  if (arr.length <= 1) {\r\n    return arr;\r\n  }\r\n  const pivot = Math.floor(arr.length / 2);\r\n\r\n  const left_arr = arr.slice(0, pivot);\r\n  const right_arr = arr.slice(pivot);\r\n\r\n  const left_arr_sorted = merge_sort(left_arr);\r\n  const right_arr_sorted = merge_sort(right_arr);\r\n\r\n  let i = 0;\r\n  let j = 0;\r\n\r\n  const sorted_arr = [];\r\n  while (i < left_arr_sorted.length && j < right_arr_sorted.length) {\r\n    if (left_arr_sorted[i] < right_arr_sorted[j]) {\r\n      sorted_arr.push(left_arr_sorted[i]);\r\n      i += 1;\r\n    } else {\r\n      sorted_arr.push(right_arr_sorted[j]);\r\n      j += 1;\r\n    }\r\n  }\r\n  sorted_arr.push(...left_arr_sorted.slice(i));\r\n  sorted_arr.push(...right_arr_sorted.slice(j));\r\n\r\n  return sorted_arr;\r\n}\r\n\r\nconst sorted_arr_result = merge_sort(arr_num);\r\nconsole.log(\"merge_sort item: \", sorted_arr_result);\r\n",
+              "tags": [""]
             },
             {
               "path": "resources/Intermediate/Sort/quick_sort.js",
-              "name": "quick_sort.js"
+              "name": "quick_sort.js",
+              "docs": "\r\n \r\nGiven an array sort it using quick sort\r\n\r\nO(n2) - worst case- time complexity\r\nO(nlog n) in best cases - quick_sort is preferred in most cases\r\ntakes 1st item in a list as pivot and splits the array into left array(less than pivot) and right array (greater than pivot) and so on as recursion\r\n\r\n\r\n",
+              "solution": "\r\nconst arr_num = [21, 10, 90, 65, 12, 55, 72, 11, 8];\r\nfunction quick_sort(arr) {\r\n  if (arr.length <= 1) {\r\n    return arr;\r\n  }\r\n  const pivot = arr.splice(0, 1);\r\n  const left_arr = [];\r\n  const right_arr = [];\r\n\r\n  for (let i = 0; i <= arr.length - 1; i++) {\r\n    if (pivot > arr[i]) {\r\n      left_arr.push(arr[i]);\r\n    } else {\r\n      right_arr.push(arr[i]);\r\n    }\r\n  }\r\n\r\n  const left_sorted = quick_sort(left_arr);\r\n  const right_sorted = quick_sort(right_arr);\r\n\r\n  return left_sorted.concat(pivot).concat(right_sorted);\r\n}\r\n\r\nconst sorted_arr_result = quick_sort(arr_num);\r\nconsole.log(\"quick_sort item: \", sorted_arr_result);\r\n",
+              "tags": [""]
             },
             {
               "path": "resources/Intermediate/Sort/selection_sort.js",
-              "name": "selection_sort.js"
+              "name": "selection_sort.js",
+              "docs": "\r\n\r\n \r\nGiven an array sort it using selection sort\r\n\r\n0(n2) - time complexity\r\ncreate new array - check for the least in the given array and move it to new array continue till the  give array is empty- timesout for larger dataset\r\n\r\n\r\n",
+              "solution": "\r\n\r\nconst arr_num = [10, 90, 65, 12, 55, 72, 11, 8];\r\nconst sorted_arr = [];\r\n\r\nfunction selection_sort(arr) {\r\n  let min_num = arr[0];\r\n  let min_num_index = 0;\r\n  for (let i = 1; i <= arr.length - 1; i++) {\r\n    if (arr[i] < min_num) {\r\n      min_num_index = i;\r\n      min_num = arr[i];\r\n    }\r\n  }\r\n\r\n  sorted_arr.push(min_num);\r\n  arr.splice(min_num_index, 1);\r\n  if (arr.length === 1) {\r\n    sorted_arr.push(arr[0]);\r\n  } else {\r\n    selection_sort(arr);\r\n  }\r\n\r\n  return sorted_arr;\r\n}\r\n\r\nconst sorted_arr_result = selection_sort(arr_num);\r\nconsole.log(\"selection_sort item: \", sorted_arr_result);\r\n",
+              "tags": ["Amazon"]
             }
           ]
         }
@@ -534,77 +666,101 @@
           "children": [
             {
               "path": "resources/Others/Javascript/async.js",
-              "name": "async.js"
+              "name": "async.js",
+              "solution": "\n\nfunction setTimeoutPromise(delay) {\n  function resolver(resolve) {\n    setTimeout(resolve(), delay);\n  }\n  return new Promise(resolver);\n}\n\nconst timeOutPromise = setTimeoutPromise(4000);\n\ntimeOutPromise.then(() => {\n  console.log(\"Hello World\");\n});\n"
             },
             {
               "path": "resources/Others/Javascript/build_json_from_array.js",
-              "name": "build_json_from_array.js"
+              "name": "build_json_from_array.js",
+              "solution": "\n\nconst arr = [\n  [\"dog\", \"mammal\"],\n  [\"shark\", \"fish\"],\n  [\"cat\", \"mammal\"],\n  [\"mammal\", \"animal\"],\n  [\"fish\", \"animal\"],\n  [\"whitecat\", \"cat\"],\n  [\"sheep\", \"mammal\"],\n  [\"sparrow\", \"bird\"],\n  [\"blacksheep\", \"sheep\"],\n];\n\nconst obj = {};\n\narr.forEach(([child, parent]) => {\n  if (!obj[parent]) obj[parent] = {};\n\n  if (child in obj) {\n    obj[parent][child] = obj[child];\n    delete obj[child];\n  } else {\n    obj[parent][child] = {};\n  }\n});\n\nfunction helper(o) {\n  for (const key in o) {\n    if (key in obj) {\n      Object.assign(o[key], obj[key]);\n      delete obj[key];\n      helper(o[key]);\n    }\n  }\n}\n\nObject.keys(obj).forEach((item) => helper(obj[item]));\n\nconsole.log(obj);\n"
             },
             {
               "path": "resources/Others/Javascript/build_json_from_element.js",
-              "name": "build_json_from_element.js"
+              "name": "build_json_from_element.js",
+              "docs": "\n \n\"<form id=\"parent\">\n\t<input type=\"text\" name=\"foo.bat\" />\n\t<input type=\"text\" name=\"foo.bar.baz\" />\n\t<input type=\"text\" name=\"fizz\" />\n</form>\"\nWrite a function (in JS) that returns an object with values of text inputs in the form id passed to it.\nFor eg:\n\ngetValues(\"parent\") should return object like\n\n{\n\t\"foo\": {\n\t\t\"bat\" : _____, //Actual value of 1st text box\n\t\t\"bar\" : {\n\t\t\t\"baz\" : _____ // Value of 2nd text box\n\t\t}\n\t},\n\t\"fizz\" : _____ // Value of 3rd text box\n} \n\n",
+              "solution": "\n\nfunction getValues(id) {\n  let element = document.querySelector(`#${id}`);\n  let inputs = element.querySelectorAll('input[type=\"text\"]');\n\n  let obj = {};\n\n  for (let input of inputs) {\n    let inputValue = input.value;\n    let names = input.name.split(\".\");\n    let tmpObject = obj;\n    for (let i = 0; i < names.length; i++) {\n      tmpObject[names[i]] = { ...tmpObject[names[i]] };\n\n      if (i === names.length - 1) {\n        tmpObject[names[i]] = inputValue;\n      } else {\n        tmpObject = tmpObject[names[i]];\n      }\n    }\n  }\n\n  return obj;\n}\n\nlet json = getValues(\"parent\");\nconsole.log(json);\n",
+              "tags": ["Amazon"]
             },
             {
               "path": "resources/Others/Javascript/build_pllyfills.js",
-              "name": "build_pllyfills.js"
+              "name": "build_pllyfills.js",
+              "solution": "\r\n\r\nArray.prototype.map = function (callback) {\r\n  console.log(\"own prototype method!\");\r\n  if (!this) throw new Error(`Cannot use 'map' on ${this}`);\r\n\r\n  const arr = this;\r\n  const result = [];\r\n  for (let i = 0; i < arr.length; i++) {\r\n    const currentValue = arr[i];\r\n    const mappedValue = callback(currentValue, i, arr);\r\n    result.push(mappedValue);\r\n  }\r\n\r\n  return result;\r\n};\r\n\r\nconst arr = [1, 2, 3];\r\nconsole.log(arr.map((val) => val * 2));\r\n\r\n// REDUCE\r\nArray.prototype.reduce = function (reduce, initialValue) {\r\n  console.log(\"my reduce \");\r\n  const arr = this;\r\n  let accumulator = initialValue;\r\n  for (let i = 0; i < arr.length; i++) {\r\n    const currentValue = arr[i];\r\n    accumulator = reduce(accumulator, currentValue, i, arr);\r\n  }\r\n  return accumulator;\r\n};\r\n\r\nconsole.log(\r\n  arr.reduce((acc, val) => {\r\n    acc += val;\r\n    return acc;\r\n  }, 0)\r\n);\r\n\r\nconsole.log(\r\n  [11, 12, 13].reduce((accumulator, currentValue, index, array) => {\r\n    accumulator += currentValue;\r\n    return accumulator;\r\n  }, 0)\r\n);\r\n\r\n//FILTER\r\nArray.prototype.filter = function (fn) {\r\n  if (!this) {\r\n    throw `cannot use filter in ${this}`;\r\n  }\r\n\r\n  let data = this;\r\n  let result = [];\r\n\r\n  for (let i = 0; i < this.length; i++) {\r\n    const fnresult = fn(data[i], i, data);\r\n    if (fnresult) {\r\n      result.push(data[i]);\r\n    }\r\n  }\r\n\r\n  return result;\r\n};\r\n\r\nconsole.log([1, 2, 3, 1, 1].filter((e) => e === 1));\r\n\r\n// BIND\r\n\r\nFunction.prototype.bind = function () {\r\n  var fn = this,\r\n    args = Array.prototype.slice.call(arguments),\r\n    object = args.shift();\r\n\r\n  return function () {\r\n    return fn.apply(object, args.concat(Array.prototype.slice.call(arguments)));\r\n  };\r\n};\r\n\r\n// APPLY\r\n"
             },
             {
               "path": "resources/Others/Javascript/build_tree.js",
-              "name": "build_tree.js"
+              "name": "build_tree.js",
+              "solution": "\n\nconst comments = [\n  {\n    id: 1,\n    parent_id: null,\n  },\n  {\n    id: 2,\n    parent_id: 1,\n  },\n  {\n    id: 3,\n    parent_id: 1,\n  },\n  {\n    id: 4,\n    parent_id: 2,\n  },\n  {\n    id: 5,\n    parent_id: 4,\n  },\n];\n\nconst nest = (items, id = null, link = \"parent_id\") =>\n  items\n    .filter((item) => item[link] === id)\n    .map((item) => ({ ...item, children: nest(items, item.id) }));\n\nconsole.log(nest(comments));\n"
             },
             {
               "path": "resources/Others/Javascript/create_pipe.js",
-              "name": "create_pipe.js"
+              "name": "create_pipe.js",
+              "docs": "\n \nconst times = (y) =>  (x) => x * y\nconst plus = (y) => (x) => x + y\nconst subtract = (y) =>  (x) => x - y\nconst divide = (y) => (x) => x / y\n\n\npipe([\n  times(2),\n  times(3)\n])  \n// x * 2 * 3\n\npipe([\n  times(2),\n  plus(3),\n  times(4)\n]) \n// (x * 2 + 3) * 4\n\npipe([\n  times(2),\n  subtract(3),\n  divide(4)\n]) \n// (x * 2 - 3) / 4\n \n\n",
+              "solution": "\n\nfunction pipe(funcs) {\n  return function (arg) {\n    let result = arg;\n    for (let func of funcs) {\n      result = func.call(this, result);\n    }\n    return result;\n  };\n}\n\nfunction pipe(funcs) {\n  return function (arg) {\n    return funcs.reduce((result, func) => {\n      return func.call(this, result);\n    }, arg);\n  };\n}\n",
+              "tags": [""]
             },
             {
               "path": "resources/Others/Javascript/currying.js",
-              "name": "currying.js"
+              "name": "currying.js",
+              "solution": "\n\nfunction nameConstructor(firstName) {\n  return function (lastName) {\n    return function (age) {\n      return firstName + \" \" + lastName + \" | \" + age;\n    };\n  };\n}\n\nconsole.log(nameConstructor(\"viki\")(\"ram\")(28));\n"
             },
             {
               "path": "resources/Others/Javascript/debounce.js",
-              "name": "debounce.js"
+              "name": "debounce.js",
+              "solution": "\n\nfunction debounce(func, timeout = 300) {\n  let timer;\n  return (...args) => {\n    clearTimeout(timer);\n    timer = setTimeout(() => {\n      func.apply(this, args);\n    }, timeout);\n  };\n}\nfunction saveInput() {\n  console.log(\"Saving data\");\n}\nconst processChange = debounce(() => saveInput());\n"
             },
             {
               "path": "resources/Others/Javascript/decode_message.js",
-              "name": "decode_message.js"
+              "name": "decode_message.js",
+              "solution": "\n\nfunction decode(message) {\n  let i = 0,\n    j = 0;\n  let ans = \"\";\n  while (message[i] && message[i][j]) {\n    ans += message[i][j];\n    message[i + 1] ? i++ : i--;\n    j++;\n  }\n  return ans;\n}\n\nconsole.log(\n  decode([\n    [\"I\", \"B\", \"C\", \"A\", \"L\", \"K\", \"A\"],\n    [\"D\", \"R\", \"F\", \"C\", \"A\", \"E\", \"A\"],\n    [\"G\", \"H\", \"O\", \"E\", \"L\", \"A\", \"D\"],\n  ])\n);\n"
             },
             {
               "path": "resources/Others/Javascript/deep_clone.js",
-              "name": "deep_clone.js"
+              "name": "deep_clone.js",
+              "solution": "\n\nvar deepClone = function (object) {\n  var newObject = {};\n  for (var key in object) {\n    if (typeof object[key] === \"object\") {\n      if (Array.isArray(object[key])) {\n        let arr = [];\n        for (let obj of object[key]) {\n          arr.push(deepClone(obj));\n        }\n        newObject[key] = arr;\n      } else {\n        newObject[key] = deepClone(object[key]);\n      }\n    } else {\n      newObject[key] = object[key];\n    }\n  }\n  return newObject;\n};\n\nlet obj = {\n  a: 1,\n  c: [\n    {\n      a: 1,\n      b: [\n        {\n          aa: 22,\n        },\n      ],\n    },\n  ],\n  b: {\n    c: 2,\n    d: {\n      e: 3,\n    },\n  },\n};\nconsole.log(JSON.stringify(deepClone(obj)));\n"
             },
             {
               "path": "resources/Others/Javascript/flat.js",
-              "name": "flat.js"
+              "name": "flat.js",
+              "solution": "\r\n\r\nlet arr = [\r\n  1,\r\n  2,\r\n  3,\r\n  4,\r\n  5,\r\n  [6, 7, 8, [9, 10, [11, 12, 13, [14, 15], 16], 17], 18],\r\n  19,\r\n  20,\r\n  [21, 22, [23]],\r\n];\r\n\r\nconst flatten = (arr) => {\r\n  flatArr = arr.reduce((acc, item) => {\r\n    if (Array.isArray(item)) {\r\n      acc = acc.concat(flatten(item));\r\n    } else {\r\n      acc.push(item);\r\n    }\r\n    return acc;\r\n  }, []);\r\n  return flatArr;\r\n};\r\n\r\nconsole.log(flatten(arr));\r\n"
             },
             {
               "path": "resources/Others/Javascript/json_path.js",
-              "name": "json_path.js"
+              "name": "json_path.js",
+              "solution": "\n\nfunction getValue(obj, str) {\n  str = str.replaceAll(\"[\", \".\");\n  str = str.replaceAll(\"]\", \"\");\n\n  str = str.split(\".\");\n  let temp = {\n    ...obj,\n  };\n\n  str.forEach((key) => {\n    temp = temp[key];\n  });\n\n  return temp;\n}\n\nconsole.log(getValue(obj, \"x[0].y.z\"));\n"
             },
             {
               "path": "resources/Others/Javascript/memo.js",
               "name": "memo.js",
+              "solution": "\n\nfunction memo(func, resolver = (...args) => args.join(\"_\")) {\n  const cache = new Map();\n\n  return function (...args) {\n    const cacheKey = resolver(...args);\n    if (cache.has(cacheKey)) {\n      return cache.get(cacheKey);\n    }\n    const value = func.apply(this, args);\n    cache.set(cacheKey, value);\n    return value;\n  };\n}\n\nconst memoed = memo(func, () => \"samekey\");\n\nmemoed(1, 2);\n// 3, func is called, 3 is cached with key 'samekey'\n\nmemoed(1, 2);\n// 3, since key is the same, 3 is returned without calling func\n\nmemoed(1, 3);\n// 3, since key is the same, 3 is returned without calling func\n\n// solution 2\nfunction useMemo(func) {\n  let map = new Map();\n\n  return (...a) => {\n    let key = [...a].join(\"_\");\n    if (map.has(key)) {\n      console.log(\"memo\");\n      return map.get(key);\n    } else {\n      let calFun = func(...a);\n      map.set(key, calFun);\n      return calFun;\n    }\n  };\n}\n\nconst sumMemo = useMemo((a, b) => {\n  console.log(\"Calling\", a, b);\n  return a + b;\n});\n\nsumMemo(1, 2);\nsumMemo(1, 2);\nsumMemo(2, 1);\n",
               "tags": ["Walmart"]
             },
             {
               "path": "resources/Others/Javascript/object_filter.js",
-              "name": "object_filter.js"
+              "name": "object_filter.js",
+              "solution": "\n\nlet obj1 = {\n  a: 1,\n  b: {\n    c: 2,\n    d: -3,\n    e: {\n      f: {\n        g: -4,\n      },\n    },\n    h: {\n      i: 5,\n      j: 6,\n    },\n  },\n};\n\nlet obj2 = {\n  a: 1,\n  b: {\n    c: \"Hello World\",\n    d: 2,\n    e: {\n      f: {\n        g: -4,\n      },\n    },\n    h: \"Good Night Moon\",\n  },\n};\n\nfunction myEmpty(obj) {\n  return typeof obj === \"object\" && Object.keys(obj).length === 0;\n}\n\nlet filterDeep = (obj, filterFun) => {\n  let res = {};\n  for (let key in obj) {\n    if (typeof obj[key] === \"object\") {\n      let innerObj = filterDeep(obj[key], filterFun);\n\n      if (!myEmpty(innerObj)) {\n        res[key] = innerObj;\n      }\n    } else if (filterFun(obj[key])) {\n      res[key] = obj[key];\n    }\n  }\n  return res;\n};\n\nconsole.log(filterDeep(obj1, (n) => n >= 0));\nconsole.log(filterDeep(obj2, (s) => typeof s === \"string\"));\n"
             },
             {
               "path": "resources/Others/Javascript/reduced_string.js",
-              "name": "reduced_string.js"
+              "name": "reduced_string.js",
+              "docs": "\n \nGiven a string return a reduced string such that , the reduced string has the characters re-arranged\n\nin order of characters having highest frequencey\nfollowed by character which appears just once in the same order as in the original string\nand no duplicate characters\nExample:\n\nInput: \"hello world\"\nOutput: \"lohe wrd\"\nExplaination: 'l' appears thrice, 'o' appears twice, 'h','e', ' '(space) ,'w','r','d' all appear once \n'h','e',' ','w','r','d' should be appended in the same order as they appear in the original string  hello world \nPlease try solving using javascript. \n\n",
+              "solution": "\n\nfunction reduceString(str) {\n  // Produce a map that retains order of insertion\n  const map = new Map();\n  for (let i = 0; i < str.length; i++) {\n    if (!map.has(str[i])) {\n      map.set(str[i], 1);\n    } else {\n      map.set(str[i], map.get(str[i]) + 1);\n    }\n  }\n\n  const mapSorted = [...map.entries()].sort((a, b) => b[1] - a[1]);\n  let result = \"\";\n  mapSorted.forEach((entry) => {\n    result += entry[0];\n  });\n\n  return result;\n}\n",
+              "tags": [""]
             },
             {
               "path": "resources/Others/Javascript/set_time_out.js",
               "name": "set_time_out.js",
+              "solution": "\nfunction total() {\n  var arr = [1, 20, 30];\n  var total = 0;\n  const promise = new Promise((resolve, reject) => {\n    for (let x of arr) {\n      setTimeout(function () {\n        total += x;\n        if (x === arr[arr.length - 1]) return resolve(total);\n      }, 100);\n    }\n  });\n\n  return promise;\n}\n\ntotal().then((val) => console.log(val));\n",
               "tags": ["Walmart"]
             },
             {
               "path": "resources/Others/Javascript/simplify_path.js",
-              "name": "simplify_path.js"
+              "name": "simplify_path.js",
+              "solution": "\nvar simplifyPath = function (path) {\n  let stack = [];\n  path = path.split(\"/\");\n\n  for (let i = 0; i < path.length; i++) {\n    if (path[i] == \".\" || path[i] == \"\") continue;\n    if (path[i] == \"..\") stack.pop();\n    else stack.push(path[i]);\n  }\n\n  return \"/\" + stack.join(\"/\");\n};\n"
             },
             {
               "path": "resources/Others/Javascript/throttle.js",
-              "name": "throttle.js"
+              "name": "throttle.js",
+              "solution": "\nlet throttleTimer;\nconst throttle = (callback, time) => {\n  if (throttleTimer) return;\n  throttleTimer = true;\n  setTimeout(() => {\n    callback();\n    throttleTimer = false;\n  }, time);\n};\n\nwindow.addEventListener(\"scroll\", () => {\n  throttle(handleScrollAnimation, 250);\n});\n"
             }
           ]
         }

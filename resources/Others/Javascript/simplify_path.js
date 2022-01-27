@@ -1,3 +1,4 @@
+/* solution */
 var simplifyPath = function (path) {
   let stack = [];
   path = path.split("/");

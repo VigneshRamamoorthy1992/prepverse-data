@@ -1,7 +1,11 @@
+/* tags: [] */
+
+/* statement */
+
 /*
   Given an array get all the subsets of an array
 */
-
+/* solution */
 const getAllSubsets = (theArray) =>
   theArray.reduce(
     (subsets, value) => {

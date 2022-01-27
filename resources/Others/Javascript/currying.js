@@ -1,3 +1,5 @@
+/* solution */
+
 function nameConstructor(firstName) {
   return function (lastName) {
     return function (age) {

@@ -1,5 +1,6 @@
 /* tags: [Microsoft] */
 
+/* statement */
 /*
 https://leetcode.com/problems/add-two-numbers-ii/
   
@@ -21,6 +22,8 @@ Output: [8,0,7]
 
 
  */
+/* solution */
+
 var addTwoNumbers = function (l1, l2) {
   let l1Len = getLen(l1);
   let l2Len = getLen(l2);

@@ -1,4 +1,5 @@
-// given a undirected graph find whether node values are in sequence 
+// given a undirected graph find whether node values are in sequence
+/* solution */
 
 function solution(N, A, B) {
   const graph = build(A, B);

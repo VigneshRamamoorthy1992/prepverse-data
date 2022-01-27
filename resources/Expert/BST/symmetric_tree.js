@@ -1,6 +1,10 @@
 /*
 https://leetcode.com/problems/symmetric-tree/
+*/
+/* tags: [Amazon] */
 
+/* statement */
+/*
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 
 
@@ -26,6 +30,7 @@ The number of nodes in the tree is in the range [1, 1000].
 Follow up: Could you solve it both recursively and iteratively?
 
 */
+/* solution */
 
 var isSymmetric = function (root) {
   const queue = [];

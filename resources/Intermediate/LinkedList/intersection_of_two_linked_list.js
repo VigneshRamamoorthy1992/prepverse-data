@@ -3,7 +3,11 @@
 /*
 
 https://leetcode.com/problems/intersection-of-two-linked-lists/
+*/
+/* tags: [Amazon] */
 
+/* statement */
+/*
 Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
 
 For example, the following two linked lists begin to intersect at node c1:
@@ -59,6 +63,7 @@ The number of nodes of listB is in the n.
 0 <= skipB < n
 intersectVal is 0 if listA and listB do not intersect.
 intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect. */
+/* solution */
 
 var getIntersectionNode = function (headA, headB) {
   let a = headA,

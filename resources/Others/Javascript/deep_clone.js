@@ -1,3 +1,5 @@
+/* solution */
+
 var deepClone = function (object) {
   var newObject = {};
   for (var key in object) {

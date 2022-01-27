@@ -5,6 +5,11 @@ technically you can drop the 26 since its a constant
 
 https://leetcode.com/problems/word-ladder/
 
+*/
+/* tags: [Amazon] */
+
+/* statement */
+/*
 A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
 
 Every adjacent pair of words differs by a single letter.
@@ -37,6 +42,7 @@ beginWord != endWord
 All the words in wordList are unique.
 
 */
+/* solution */
 
 var ladderLength = function (beginWord, endWord, wordList) {
   const wordSet = new Set(wordList);

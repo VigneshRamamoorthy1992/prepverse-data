@@ -1,16 +1,21 @@
-const arr_num = [10, 90, 65, 12, 55, 72, 11, 8];
+/* tags: [] */
 
+/* statement */
 /* 
-    search for an item and returns its index 
-    0(n) - time complexity
-*/
+Given an array search it using linear search
 
+search for an item and returns its index 
+0(n) - time complexity
+*/
+/* solution */
+
+const arr_num = [10, 90, 65, 12, 55, 72, 11, 8];
 function linear_search(arr, searchItem) {
-    for (let i = 0; i <= arr.length - 1; i++) {
-        if (arr[i] === searchItem) {
-            return i;
-        }
+  for (let i = 0; i <= arr.length - 1; i++) {
+    if (arr[i] === searchItem) {
+      return i;
     }
+  }
 }
 
 const search_index = linear_search(arr_num, 555);

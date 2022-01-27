@@ -1,5 +1,7 @@
 /* tags: [Walmart] */
 
+/* solution */
+
 function memo(func, resolver = (...args) => args.join("_")) {
   const cache = new Map();
 

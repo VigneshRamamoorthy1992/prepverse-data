@@ -1,5 +1,11 @@
 /*
 https://leetcode.com/problems/flood-fill/
+
+*/
+/* tags: [Amazon] */
+
+/* statement */
+/*
 An image is represented by an m x n integer grid image where image[i][j] represents the pixel value of the image.
 
 You are also given three integers sr, sc, and newColor. You should perform a flood fill on the image starting from the pixel image[sr][sc].
@@ -33,7 +39,7 @@ n == image[i].length
 0 <= sc < n
 
 */
-
+/* solution */
 const floodFill = (image, sr, sc, newColor, firstColor = image[sr][sc]) => {
   // handle if the coordinate is out of bounds
   // or if it is already the new color

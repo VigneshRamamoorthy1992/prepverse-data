@@ -1,6 +1,11 @@
 /* 
-Serialize and Deserialize Binary Tree
 https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+*/
+/* tags: [Amazon] */
+
+/* statement */
+
+/*Serialize and Deserialize Binary Tree
 
 Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
 
@@ -35,7 +40,6 @@ The number of nodes in the tree is in the range [0, 104].
 -1000 <= Node.val <= 1000
  */
 
-
 // e.g.
 //    1
 //   / \
@@ -44,37 +48,38 @@ The number of nodes in the tree is in the range [0, 104].
 //    4   5
 //
 // data = [1, 2, null, null, 3, 4, null, null, 5, null, null]
+/* solution */
 
 function serialize(root) {
-    let data = [];
-  
-    function go(node) {
-      if (node == null) {
-        data.push(null);
-        return;
-      }
-  
-      data.push(node.val);
-      go(node.left);
-      go(node.right);
+  let data = [];
+
+  function go(node) {
+    if (node == null) {
+      data.push(null);
+      return;
     }
-  
-    go(root);
-    return data;
+
+    data.push(node.val);
+    go(node.left);
+    go(node.right);
   }
-  
-  function deserialize(data) {
-    function go() {
-      if (data.length === 0) return;
-  
-      const val = data.shift();
-      if (val == null) return null;
-  
-      const node = new TreeNode(val);
-      node.left = go();
-      node.right = go();
-      return node;
-    }
-  
-    return go();
+
+  go(root);
+  return data;
+}
+
+function deserialize(data) {
+  function go() {
+    if (data.length === 0) return;
+
+    const val = data.shift();
+    if (val == null) return null;
+
+    const node = new TreeNode(val);
+    node.left = go();
+    node.right = go();
+    return node;
   }
+
+  return go();
+}

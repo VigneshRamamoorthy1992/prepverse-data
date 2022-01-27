@@ -1,4 +1,8 @@
-/* Given a string return a reduced string such that , the reduced string has the characters re-arranged
+/* tags: [] */
+
+/* statement */
+/* 
+Given a string return a reduced string such that , the reduced string has the characters re-arranged
 
 in order of characters having highest frequencey
 followed by character which appears just once in the same order as in the original string
@@ -10,6 +14,8 @@ Output: "lohe wrd"
 Explaination: 'l' appears thrice, 'o' appears twice, 'h','e', ' '(space) ,'w','r','d' all appear once 
 'h','e',' ','w','r','d' should be appended in the same order as they appear in the original string  hello world 
 Please try solving using javascript. */
+
+/* solution */
 
 function reduceString(str) {
   // Produce a map that retains order of insertion

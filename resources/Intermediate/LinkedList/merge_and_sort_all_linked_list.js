@@ -1,8 +1,11 @@
+/* statement */
 /*
 
 merge an n sorted list
 
 */
+
+/* solution */
 
 var mergeKLists = function (lists) {
   if (!lists.length) return null;

@@ -8,6 +8,8 @@ n - length of an array
 https://www.youtube.com/watch?v=oBt53YbR9Kk&t=9994s
 */
 
+/* solution */
+
 function bestSum(targetSum, numbers, memo = {}) {
   if (targetSum in memo) return memo[targetSum];
   if (targetSum === 0) return [];

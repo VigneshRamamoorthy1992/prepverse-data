@@ -1,6 +1,10 @@
 /* 
 https://leetcode.com/problems/maximum-frequency-stack/solution/
+*/
+/* tags: [Amazon] */
 
+/* statement */
+/*
 Design a stack-like data structure to push elements to the stack and pop the most frequent element from the stack.
 
 Implement the FreqStack class:
@@ -39,34 +43,37 @@ Constraints:
 At most 2 * 104 calls will be made to push and pop.
 It is guaranteed that there will be at least one element in the stack before calling pop.
  */
-var FreqStack = function() {
-    this.freqStack = [];
-    this.freqMap = {};
+
+/* solution */
+
+var FreqStack = function () {
+  this.freqStack = [];
+  this.freqMap = {};
 };
 
-/** 
+/**
  * @param {number} x
  * @return {void}
  */
-FreqStack.prototype.push = function(x) {
-    this.freqMap[x] = this.freqMap[x] ? this.freqMap[x] + 1 : 1;
-    const freq = this.freqMap[x];
-    if (this.freqStack.length < freq) {
-        this.freqStack.push([x]);
-    } else {
-        this.freqStack[freq-1].push(x);
-    }
+FreqStack.prototype.push = function (x) {
+  this.freqMap[x] = this.freqMap[x] ? this.freqMap[x] + 1 : 1;
+  const freq = this.freqMap[x];
+  if (this.freqStack.length < freq) {
+    this.freqStack.push([x]);
+  } else {
+    this.freqStack[freq - 1].push(x);
+  }
 };
 
 /**
  * @return {number}
  */
-FreqStack.prototype.pop = function() {
-    const lastPart = this.freqStack[this.freqStack.length - 1];
-    const result = lastPart.pop();
-    if (lastPart.length === 0) {
-        this.freqStack.pop();
-    }
-    this.freqMap[result] -= 1;
-    return result;
+FreqStack.prototype.pop = function () {
+  const lastPart = this.freqStack[this.freqStack.length - 1];
+  const result = lastPart.pop();
+  if (lastPart.length === 0) {
+    this.freqStack.pop();
+  }
+  this.freqMap[result] -= 1;
+  return result;
 };

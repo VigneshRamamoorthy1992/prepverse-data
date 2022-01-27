@@ -6,6 +6,9 @@
  */
 
 // MAP
+
+/* solution */
+
 Array.prototype.map = function (callback) {
   console.log("own prototype method!");
   if (!this) throw new Error(`Cannot use 'map' on ${this}`);

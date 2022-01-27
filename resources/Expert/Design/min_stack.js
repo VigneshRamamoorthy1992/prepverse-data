@@ -1,6 +1,11 @@
 /* 
 https://leetcode.com/problems/min-stack/
 
+*/
+/* tags: [Amazon] */
+
+/* statement */
+/*
 Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
 
 Implement the MinStack class:
@@ -39,40 +44,41 @@ Methods pop, top and getMin operations will always be called on non-empty stacks
 At most 3 * 104 calls will be made to push, pop, top, and getMin.
  */
 
+/* solution */
 
-var MinStack = function() {
-    this.elements = [];
+var MinStack = function () {
+  this.elements = [];
 };
-  
-  /**
+
+/**
   
    @param {number} x
    @return {void}
    */
-  MinStack.prototype.push = function(x) {
-    this.elements.push({
-      value: x,
-      min: this.elements.length === 0 ? x : Math.min(x, this.getMin()),
-    });
-  };
-  /**
+MinStack.prototype.push = function (x) {
+  this.elements.push({
+    value: x,
+    min: this.elements.length === 0 ? x : Math.min(x, this.getMin()),
+  });
+};
+/**
   
    @return {void}
    */
-  MinStack.prototype.pop = function() {
-    this.elements.pop();
-  };
-  /**
+MinStack.prototype.pop = function () {
+  this.elements.pop();
+};
+/**
   
    @return {number}
    */
-  MinStack.prototype.top = function() {
-    return this.elements[this.elements.length - 1].value;
-  };
-  /**
+MinStack.prototype.top = function () {
+  return this.elements[this.elements.length - 1].value;
+};
+/**
   
    @return {number}
    */
-  MinStack.prototype.getMin = function() {
-    return this.elements[this.elements.length - 1].min;
-  };
+MinStack.prototype.getMin = function () {
+  return this.elements[this.elements.length - 1].min;
+};
