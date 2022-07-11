@@ -1,3 +1,35 @@
+/* statement */
+/*
+Build json based on the given array 2D array
+
+
+<pre>
+[child, parent]
+
+Input:
+const array = [
+  ["dog", "mammal"],
+  ["cat", "mammal"],
+  ["mammal", "animal"],
+  ["fish", "animal"],
+];
+
+Output:
+
+json ={
+  animal:{
+    mammal :{
+      dog:{},
+      cat:{}
+    },
+    fish:{}
+  }
+
+}
+
+</pre>
+*/
+
 /* solution */
 
 const arr = [

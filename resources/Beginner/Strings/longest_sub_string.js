@@ -57,7 +57,6 @@ function longestSubStr(s) {
     left = map[val] >= left ? map[val] + 1 : left;
 
     map[val] = ind;
-
     return Math.max(max, ind - left + 1);
   }, 0);
 }

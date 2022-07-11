@@ -14,7 +14,7 @@ The distance between two points on the X-Y plane is the Euclidean distance (i.e.
 You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).
 
 
-
+<pre>
 Example 1:
 
 
@@ -36,7 +36,7 @@ Constraints:
 
 1 <= k <= points.length <= 104
 -104 < xi, yi < 104
-
+</pre>
 */
 
 /* solution */

@@ -1,3 +1,9 @@
+/* tags: [Amazon] */
+/* statement */
+/*
+Given a nested object do a deep clone of the object
+*/
+
 /* solution */
 
 var deepClone = function (object) {

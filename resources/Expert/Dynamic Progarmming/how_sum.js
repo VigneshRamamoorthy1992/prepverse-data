@@ -7,6 +7,13 @@ m - target sum
 n - length of an array
 https://www.youtube.com/watch?v=oBt53YbR9Kk&t=9994s
 */
+
+/* statement */
+/*
+Given a target sum <pre>8</pre> and a numbers array <pre>[2, 3, 5]</pre>
+return numbers array by which a possible way the target sum can be achieved using the numbers array
+note: no restriction on number of usage on numbers array
+ */
 /* solution */
 
 function howSum(targetSum, numbers, memo = {}) {

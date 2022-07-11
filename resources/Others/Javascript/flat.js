@@ -1,3 +1,9 @@
+/* tags: [Walmart] */
+/* statement */
+/*
+Given an multi dimentional array flatten the array without using default <pre>flat</pre> method
+*/
+
 /* solution */
 
 let arr = [

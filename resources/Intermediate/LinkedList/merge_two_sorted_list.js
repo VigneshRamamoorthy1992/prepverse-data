@@ -12,7 +12,7 @@ Merge the two lists in a one sorted list. The list should be made by splicing to
 Return the head of the merged linked list.
 
  
-
+<pre>
 Example 1:
 
 
@@ -32,8 +32,8 @@ Constraints:
 
 The number of nodes in both lists is in the range [0, 50].
 -100 <= Node.val <= 100
-Both list1 and list2 are sorted in non-decreasing order. */
-
+Both list1 and list2 are sorted in non-decreasing order.
+</pre> */
 /* solution */
 
 var mergeTwoLists = function (l1, l2) {

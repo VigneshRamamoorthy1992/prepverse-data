@@ -15,7 +15,7 @@ void put(int key, int value) Update the value of the key if the key exists. Othe
 The functions get and put must each run in O(1) average time complexity.
 
  
-
+<pre>
 Example 1:
 
 Input
@@ -43,7 +43,8 @@ Constraints:
 0 <= key <= 104
 0 <= value <= 105
 At most 2 * 105 calls will be made to get and put.
- */
+</pre> 
+*/
 /* solution */
 
 class LRUCache {

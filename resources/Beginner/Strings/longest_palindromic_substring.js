@@ -2,8 +2,9 @@
 /* statement */
 
 /*
-Given a string s, return the longest palindromic substring in s.
+Given a string <pre>s</pre>, return the longest palindromic substring in <pre>s</pre>.
 
+<pre>
 Example 1:
 
 Input: s = "babad"
@@ -26,7 +27,8 @@ Output: "a"
 Constraints:
 
 1 <= s.length <= 1000
-s consist of only digits and English letters.   
+s consist of only digits and English letters.  
+</pre> 
  */
 
 /* solution */

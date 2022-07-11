@@ -1,5 +1,10 @@
 /* tags: [Walmart] */
 
+/* statement */
+/*
+Write a memorization function that calculates the value and caches the data
+when requested for the second time cached data is retrived rather than calculating again
+*/
 /* solution */
 
 function memo(func, resolver = (...args) => args.join("_")) {

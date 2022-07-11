@@ -2,16 +2,20 @@
 
 /* statement */
 /* 
-"<form id="parent">
-	<input type="text" name="foo.bat" />
-	<input type="text" name="foo.bar.baz" />
-	<input type="text" name="fizz" />
-</form>"
+<pre>
+"&ltform id="parent"&gt
+	&ltinput type="text" name="foo.bat" /&gt
+	&ltinput type="text" name="foo.bar.baz" /&gt
+	&ltinput type="text" name="fizz" /&gt
+&lt/form&gt
+</pre>
+
 Write a function (in JS) that returns an object with values of text inputs in the form id passed to it.
 For eg:
 
 getValues("parent") should return object like
 
+<pre>
 {
 	"foo": {
 		"bat" : _____, //Actual value of 1st text box
@@ -20,7 +24,9 @@ getValues("parent") should return object like
 		}
 	},
 	"fizz" : _____ // Value of 3rd text box
-} */
+} 
+</pre>
+*/
 
 /* solution */
 

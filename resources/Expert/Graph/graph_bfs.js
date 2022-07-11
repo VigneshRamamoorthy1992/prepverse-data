@@ -1,3 +1,9 @@
+/* statement */
+/*
+Given a graph
+write a breath first traversal
+*/
+
 /* solution */
 
 function bfs(graph, source) {

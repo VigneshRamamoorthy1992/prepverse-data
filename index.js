@@ -27,6 +27,7 @@ function generateMetadata() {
 
 function parseContent(fileDetail) {
   const content = fs.readFileSync(fileDetail.path).toString();
+  fileDetail["name"] = fileDetail.name.slice(0, -3);
   fileDetail["docs"] = content
     .match(statementPattern)
     ?.pop()

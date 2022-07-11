@@ -6,7 +6,7 @@
 An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
 
  
-
+<pre>
 Example 1:
 
 Input: strs = ["eat","tea","tan","ate","nat","bat"]
@@ -25,6 +25,8 @@ Constraints:
 
 1 <= strs.length <= 104
 0 <= strs[i].length <= 100
-strs[i] consists of lowercase English letters. */
+strs[i] consists of lowercase English letters.
+</pre> */
 
 /* solution */
+"try out";

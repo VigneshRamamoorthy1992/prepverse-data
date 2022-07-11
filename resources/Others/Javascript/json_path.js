@@ -1,3 +1,26 @@
+/* statement */
+/*
+Given an object and a path.
+retrive the value in the path
+
+<pre>
+pathString = "x[0].y.z"
+
+obj = {
+  x:[
+    {
+      y:{
+        z:"works"
+      }
+    }
+  ]
+}
+
+return "works"
+</pre>
+
+*/
+
 /* solution */
 
 function getValue(obj, str) {

@@ -1,3 +1,18 @@
+/* statement */
+/*
+Given a 2D array decode the message diagonally
+
+<pre>
+decoded message = "IROCLEK"
+
+[
+    ["I", "B", "C", "A", "L", "K", "A"],
+    ["D", "R", "F", "C", "A", "E", "A"],
+    ["G", "H", "O", "E", "L", "A", "D"],
+  ]
+</pre>
+*/
+
 /* solution */
 
 function decode(message) {

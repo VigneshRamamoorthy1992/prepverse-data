@@ -1,3 +1,9 @@
+/*
+catalan number
+catalan (n) is sum of catalan(i)* catalan(n-i-1)
+
+*/
+
 /* tags: [] */
 
 /* statement */
@@ -5,27 +11,13 @@
   Given an array count all the possible bst permuntations
 */
 /* solution */
-function processData(input) {
-  input.sort(function (a, b) {
-    return a - b;
-  });
-
-  var max = input[1] - input[0];
-  var maxPairs = [input[0], input[1]];
-
-  for (var i = 2; i < input.length; i++) {
-    var prev = input[i - 1];
-    var next = input[i];
-    var diff = next - prev;
-
-    if (diff < max) {
-      max = diff;
-      maxPairs = [prev, next];
-    } else if (diff === max) {
-      maxPairs = maxPairs.concat([prev, next]);
-    }
+function catalan(n){
+  if(n <= 1) return 1;
+  let res = 0;
+  for(let i =0; i<n; i++){
+    res += catalan(i) * catalan(n-i-1)
   }
-
-  console.log(maxPairs.join(" "));
+  return res;
 }
-processData([4, 2, 1, 3]);
+
+console.log(catalan(2));

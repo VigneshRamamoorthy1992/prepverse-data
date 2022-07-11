@@ -14,7 +14,7 @@ The testcases will be generated such that the answer is unique.
 A substring is a contiguous sequence of characters within the string.
 
 
-
+<pre>
 Example 1:
 
 Input: s = "ADOBECODEBANC", t = "ABC"
@@ -39,7 +39,7 @@ m == s.length
 n == t.length
 1 <= m, n <= 105
 s and t consist of uppercase and lowercase English letters.
-
+</pre>
 
 Follow up: Could you find an algorithm that runs in O(m + n) time?
 

@@ -4,7 +4,13 @@ conditions: acyclic and directed graph
 time: O(n2)
 space: O(n) 
 */
+/* statement */
+/*
+Given a graph find whether path from source to destination exist
 
+conditions: acyclic and directed graph
+
+*/
 /* solution */
 
 function hasPath_dfs(graph, source, destination) {

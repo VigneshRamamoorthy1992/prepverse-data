@@ -1,4 +1,22 @@
 /* tags: [Walmart] */
+/* statement */
+/*
+Given a below code 
+wt's the value of <pre>total</pre>
+how to make settimeout to print <pre>51</pre>
+<pre>
+arr = [1,20,30];
+for (var x in arr) {
+      setTimeout(function () {
+      total += x;
+  }, 100);
+}
+
+console.log(total)
+</pre>
+
+
+*/
 
 /* solution */
 function total() {

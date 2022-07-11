@@ -5,6 +5,11 @@ time: O(n2)
 space: O(n) 
 */
 
+/* statement */
+/*
+Find the minimum island size in a give graph
+
+*/
 /* solution */
 
 function minIsland(graph) {

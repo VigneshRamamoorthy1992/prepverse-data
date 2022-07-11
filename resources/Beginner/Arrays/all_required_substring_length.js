@@ -2,8 +2,9 @@
 
 /* statement */
 /*
-    given a string "aabbbc" find all the required lengths of a string aa bbb c
-    max length of consequtive string is 3 so required char for others is 2 return 3
+    given a string <pre>aabbbc</pre> find all the required lengths of a string <pre>aa bbb c</pre>
+    max length of consequtive string is 3 so required char for others two is 3
+    return 3
  */
 
 /* solution */

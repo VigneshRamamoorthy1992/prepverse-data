@@ -5,6 +5,13 @@ time: O(n2)
 space: O(n) 
 */
 
+/* statement */
+/*
+Find whether there is a path from source to destination
+
+conditions: cyclic and undirected graph
+
+*/
 /* solution */
 
 function undirectedPath(edges, source, destination) {

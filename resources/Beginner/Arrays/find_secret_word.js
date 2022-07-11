@@ -1,9 +1,11 @@
+/*
+https://leetcode.com/problems/guess-the-word/
+*/
+
 /* tags: [Amazon] */
 
 /* statement */
 /*
-https://leetcode.com/problems/guess-the-word/
-
 This is an interactive problem.
 
 You are given an array of unique strings wordlist where wordlist[i] is 6 letters long, and one word in this list is chosen as secret.
@@ -15,7 +17,7 @@ This function returns an integer type, representing the number of exact matches 
 For each test case, you have exactly 10 guesses to guess the word. At the end of any number of calls, if you have made 10 or fewer calls to Master.guess and at least one of these guesses was secret, then you pass the test case.
 
 
-
+<pre>
 Example 1:
 
 Input: secret = "acckzz", wordlist = ["acckzz","ccbazz","eiowzz","abcczz"], numguesses = 10
@@ -83,7 +85,7 @@ numguesses == 10
   ]
 ]
 acckzz  :  15
-
+</pre>
 */
 /* solution */
 var findSecretWord = function (wordlist, master) {

@@ -5,6 +5,12 @@ time: O(n2)
 space: O(n) 
 */
 
+/* statement */
+/*
+find the largest of connected components in a give graph
+
+*/
+
 /* solution */
 
 function largestComponent(graph) {

@@ -1,3 +1,8 @@
+/* statement */
+/*
+  Build a function to demonstrate debounce in javascript
+*/
+
 /* solution */
 
 function debounce(func, timeout = 300) {

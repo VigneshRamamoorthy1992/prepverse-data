@@ -4,9 +4,11 @@
 /*
     given a string reverse it without using inbuild functions
 
-    ex:
+    <pre>
+    Example 1:
     let str = "prepverse";
     result string "esrevperp"
+    </pre>
  */
 
 /* solution */

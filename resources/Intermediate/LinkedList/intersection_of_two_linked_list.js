@@ -29,7 +29,7 @@ skipB - The number of nodes to skip ahead in listB (starting from the head) to g
 The judge will then create the linked structure based on these inputs and pass the two heads, headA and headB to your program. If you correctly return the intersected node, then your solution will be accepted.
 
 
-
+<pre>
 Example 1:
 
 
@@ -62,7 +62,10 @@ The number of nodes of listB is in the n.
 0 <= skipA < m
 0 <= skipB < n
 intersectVal is 0 if listA and listB do not intersect.
-intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect. */
+intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect. 
+</pre>
+*/
+
 /* solution */
 
 var getIntersectionNode = function (headA, headB) {

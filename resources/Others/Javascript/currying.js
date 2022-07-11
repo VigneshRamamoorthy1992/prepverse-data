@@ -1,3 +1,10 @@
+/* statement */
+/*
+  Build a function to demonstrate currying in javascript
+
+  what us <a href="https://javascript.info/currying-partials" target="_blank"><pre>currying</pre></a>
+*/
+
 /* solution */
 
 function nameConstructor(firstName) {

@@ -4,6 +4,12 @@ conditions:
 time: O(n)
 space: O(n) 
 */
+
+/* statement */
+/*
+Given a n
+return the fibonacci
+*/
 /* solution */
 
 function fib(n, memo = {}) {

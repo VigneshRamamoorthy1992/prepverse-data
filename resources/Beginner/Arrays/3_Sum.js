@@ -71,6 +71,6 @@ function threeSum(nums, target) {
   return results;
 }
 
-// console.log(threeSum([-1,0,1,2,-1,-4]));
+console.log(threeSum([-1, 0, 1, 2, -1, -4], 0));
 
 console.log(threeSum([1, 7, 2, 5, 6, 2, 0], 8));

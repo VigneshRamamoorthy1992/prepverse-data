@@ -1,8 +1,6 @@
 /* statement */
 /*
-
-merge an n sorted list
-
+Merge an n sorted linked list
 */
 
 /* solution */

@@ -7,14 +7,16 @@ Given a string return a reduced string such that , the reduced string has the ch
 in order of characters having highest frequencey
 followed by character which appears just once in the same order as in the original string
 and no duplicate characters
+
+<pre>
 Example:
 
 Input: "hello world"
 Output: "lohe wrd"
 Explaination: 'l' appears thrice, 'o' appears twice, 'h','e', ' '(space) ,'w','r','d' all appear once 
 'h','e',' ','w','r','d' should be appended in the same order as they appear in the original string  hello world 
-Please try solving using javascript. */
-
+Please try solving using javascript.
+</pre> */
 /* solution */
 
 function reduceString(str) {

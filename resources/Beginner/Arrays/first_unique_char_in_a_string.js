@@ -1,14 +1,17 @@
+/*
+https://leetcode.com/problems/first-unique-character-in-a-string/
+
+*/
+
 /* tags: [Amazon] */
 
 /* statement */
 
 /*
-https://leetcode.com/problems/first-unique-character-in-a-string/
 
 Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.
 
-
-
+<pre>
 Example 1:
 
 Input: s = "leetcode"
@@ -27,7 +30,7 @@ Constraints:
 
 1 <= s.length <= 105
 s consists of only lowercase English letters.
-
+</pre>
 */
 
 /* solution */

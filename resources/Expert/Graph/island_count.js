@@ -4,7 +4,11 @@ conditions:
 time: O(n2)
 space: O(n) 
 */
+/* statement */
+/*
+find the island count in a give graph
 
+*/
 /* solution */
 
 function islandCount(graph) {

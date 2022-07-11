@@ -7,6 +7,14 @@ m - target.length
 n - lenth of word bank
 https://www.youtube.com/watch?v=oBt53YbR9Kk&t=9994s
 */
+
+/* statement */
+/*
+Given a string <pre>abcdef</pre> and a word bank <pre>["ab", "abc", "cd", "def", "abcd"]</pre>
+return count of all possible way to construct string using the word bank
+note: no restriction on number of usage on word bank items
+ */
+
 /* solution */
 
 function countConstruct(target, wordBank, memo = {}) {

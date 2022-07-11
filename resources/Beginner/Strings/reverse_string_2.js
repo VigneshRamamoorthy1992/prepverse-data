@@ -15,7 +15,7 @@ A word is defined as a sequence of non-space characters. The words in s will be 
 Your code must solve the problem in-place, i.e. without allocating extra space.
 
  
-
+<pre>
 Example 1:
 
 Input: s = ["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]
@@ -32,7 +32,9 @@ Constraints:
 s[i] is an English letter (uppercase or lowercase), digit, or space ' '.
 There is at least one word in s.
 s does not contain leading or trailing spaces.
-All the words in s are guaranteed to be separated by a single space. */
+All the words in s are guaranteed to be separated by a single space. 
+</pre>
+*/
 
 /* solution */
 

@@ -6,6 +6,11 @@ space: O(n)
 https://www.youtube.com/watch?v=tWVWeAqZ0WU&t=6887s
 */
 
+/* statement */
+/*
+Given an adjacency object find the number of connected componenets
+*/
+
 /* solution */
 
 function connectedComponentsCount(graph) {

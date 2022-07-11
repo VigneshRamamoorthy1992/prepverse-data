@@ -13,8 +13,7 @@ Design an algorithm to serialize and deserialize a binary tree. There is no rest
 
 Clarification: The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
 
- 
-
+<pre>
 Example 1:
 
 
@@ -38,17 +37,20 @@ Constraints:
 
 The number of nodes in the tree is in the range [0, 104].
 -1000 <= Node.val <= 1000
- */
 
-// e.g.
-//    1
-//   / \
-//  2   3
-//     / \
-//    4   5
-//
-// data = [1, 2, null, null, 3, 4, null, null, 5, null, null]
+e.g.
+   1
+  / \
+ 2   3
+    / \
+   4   5
+
+[1, 2, null, null, 3, 4, null, null, 5, null, null]
+</pre> 
+*/
 /* solution */
+
+data = [1, 2, null, null, 3, 4, null, null, 5, null, null];
 
 function serialize(root) {
   let data = [];

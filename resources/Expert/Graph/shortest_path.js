@@ -4,7 +4,10 @@ conditions:
 time: O(n2)
 space: O(n) 
 */
-
+/* statement */
+/*
+Find the shortest path in a give graph from source to destination
+*/
 /* solution */
 
 function shortestPath(edges, source, destination) {

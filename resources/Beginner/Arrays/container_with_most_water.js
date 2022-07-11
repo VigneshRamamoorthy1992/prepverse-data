@@ -1,8 +1,11 @@
+/*
+https://leetcode.com/problems/container-with-most-water/
+*/
+
 /* tags: [Amazon] */
 
 /* statement */
 /*
-https://leetcode.com/problems/container-with-most-water/
 
 You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
 
@@ -13,7 +16,7 @@ Return the maximum amount of water a container can store.
 Notice that you may not slant the container.
 
 
-
+<pre>
 Example 1:
 
 
@@ -27,6 +30,7 @@ Example 2:
 
 Input: height = [1,1]
 Output: 1
+</pre>
 */
 
 /* solution */

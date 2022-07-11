@@ -13,8 +13,7 @@ You may assume that the given expression is always valid. All intermediate resul
 
 Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
 
-
-
+<pre>
 Example 1:
 
 Input: s = "3+2*2"
@@ -36,7 +35,7 @@ s consists of integers and operators ('+', '-', '*', '/') separated by some numb
 s represents a valid expression.
 All the integers in the expression are non-negative integers in the range [0, 231 - 1].
 The answer is guaranteed to fit in a 32-bit integer.
-
+</pre>
 */
 
 /* solution */

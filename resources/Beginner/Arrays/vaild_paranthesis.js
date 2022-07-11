@@ -14,7 +14,7 @@ An input string is valid if:
 Open brackets must be closed by the same type of brackets.
 Open brackets must be closed in the correct order.
 
-
+<pre>
 Example 1:
 
 Input: s = "()"
@@ -33,7 +33,7 @@ Constraints:
 
 1 <= s.length <= 104
 s consists of parentheses only '()[]{}'.
-
+</pre>
 */
 
 /* solution */

@@ -10,6 +10,7 @@ Given a string paragraph and a string array of the banned words `banned`, return
 
 The words in paragraph are case-insensitive and the answer should be returned in lowercase.
 
+<pre>
 Example 1:
 
 Input: paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.", banned = ["hit"]
@@ -33,7 +34,7 @@ paragraph consists of English letters, space ' ', or one of the symbols: "!?',;.
 0 <= banned.length <= 100
 1 <= banned[i].length <= 10
 banned[i] consists of only lowercase English letters
-
+</pre>
 */
 
 /* solution */

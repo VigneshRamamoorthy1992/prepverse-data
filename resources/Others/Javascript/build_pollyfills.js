@@ -1,8 +1,15 @@
-/**
+/* tags: [Walmart] */
+/* statement */
+/*
+Build pollyfills for javascript functions
+array.map, array.reduce, array.filter and function.bind
 
+<pre>
+    let arr = [1, 2, 3, 1, 1];
     arr.map((currentValue, index, array)=>{})
-
     arr.reduce((accumulator,currentValue,index,array)=>{accumulator += currentValue},initialValue);
+    arr.filter((e) => e === 1)
+</pre>
  */
 
 // MAP

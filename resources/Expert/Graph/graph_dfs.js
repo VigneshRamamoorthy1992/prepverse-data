@@ -1,3 +1,9 @@
+/* statement */
+/*
+Given a graph
+write a depth first traversal
+*/
+
 /* solution */
 
 function dfs(graph, source) {

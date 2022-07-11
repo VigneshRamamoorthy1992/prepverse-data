@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <button id="getpricebutton">click</button>
+    <div id="result"></div>
+  </body>
+  <script>
+    const element = document.getElementById("getpricebutton");
+    const result = document.getElementById("result");
+    element.addEventListener("click", async () => {
+      let val = await getPrice();
+      console.log(val);
+      [1, 2, 3].forEach((e) => {
+        result.innerHTML += `<span>${val.type} - ${e}</span>`;
+      });
+    });
+    getPrice = async () => {
+      const result = await fetch("https://fakestoreapi.com/products/1");
+      console.log("Reult: ", result);
+      return result;
+    };
+  </script>
+</html>

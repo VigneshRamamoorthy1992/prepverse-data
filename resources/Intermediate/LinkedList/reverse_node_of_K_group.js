@@ -12,7 +12,7 @@ k is a positive integer and is less than or equal to the length of the linked li
 You may not alter the values in the list's nodes, only nodes themselves may be changed.
 
 
-
+<pre>
 Example 1:
 
 
@@ -30,7 +30,7 @@ Constraints:
 The number of nodes in the list is n.
 1 <= k <= n <= 5000
 0 <= Node.val <= 1000
-
+</pre>
 */
 /* solution */
 

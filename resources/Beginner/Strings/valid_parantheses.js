@@ -2,14 +2,14 @@
 
 /* statement */
 
-/* Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+/* Given a string s containing just the characters <pre>'(', ')', '{', '}', '[' and ']'</pre> determine if the input string is valid.
 
 An input string is valid if:
 
 Open brackets must be closed by the same type of brackets.
 Open brackets must be closed in the correct order.
  
-
+<pre>
 Example 1:
 
 Input: s = "()"
@@ -35,7 +35,9 @@ Output: true
 Constraints:
 
 1 <= s.length <= 104
-s consists of parentheses only '()[]{}'. */
+s consists of parentheses only '()[]{}'. 
+</pre>
+*/
 
 var isValid = function (s) {
   const stack = [];

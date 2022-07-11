@@ -20,7 +20,7 @@ The digit-logs maintain their relative ordering.
 Return the final order of the logs.
 
 
-
+<pre>
 Example 1:
 
 Input: logs = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]
@@ -40,7 +40,7 @@ Constraints:
 3 <= logs[i].length <= 100
 All the tokens of logs[i] are separated by a single space.
 logs[i] is guaranteed to have an identifier and at least one word after the identifier.
-
+</pre>
 */
 
 /* solution */

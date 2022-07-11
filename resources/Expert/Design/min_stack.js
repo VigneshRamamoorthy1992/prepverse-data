@@ -10,13 +10,13 @@ Design a stack that supports push, pop, top, and retrieving the minimum element 
 
 Implement the MinStack class:
 
-MinStack() initializes the stack object.
-void push(int val) pushes the element val onto the stack.
-void pop() removes the element on the top of the stack.
-int top() gets the top element of the stack.
-int getMin() retrieves the minimum element in the stack.
+<pre>MinStack()</pre> initializes the stack object.
+<pre>push(val)</pre> pushes the element val onto the stack.
+<pre>pop()</pre> removes the element on the top of the stack.
+<pre>top()</pre> gets the top element of the stack.
+<pre>getMin()</pre> retrieves the minimum element in the stack.
  
-
+<pre>
 Example 1:
 
 Input
@@ -42,7 +42,8 @@ Constraints:
 -231 <= val <= 231 - 1
 Methods pop, top and getMin operations will always be called on non-empty stacks.
 At most 3 * 104 calls will be made to push, pop, top, and getMin.
- */
+</pre>
+*/
 
 /* solution */
 

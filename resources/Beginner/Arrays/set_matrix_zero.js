@@ -6,12 +6,12 @@ https://leetcode.com/problems/set-matrix-zeroes/
 
 /* statement */
 /*
-Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's, and return the matrix.
+Given an <pre>m x n</pre> integer matrix matrix, if an element is 0, set its entire row and column to 0's, and return the matrix.
 
 You must do it in place.
 
 
-
+<pre>
 Example 1:
 
 
@@ -30,7 +30,7 @@ m == matrix.length
 n == matrix[0].length
 1 <= m, n <= 200
 -231 <= matrix[i][j] <= 231 - 1
-
+</pre>
 
 Follow up:
 

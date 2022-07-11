@@ -21,7 +21,7 @@ random_index: the index of the node (range from 0 to n-1) that the random pointe
 Your code will only be given the head of the original linked list.
 
 
-
+<pre>
 Example 1:
 
 
@@ -45,7 +45,7 @@ Constraints:
 0 <= n <= 1000
 -104 <= Node.val <= 104
 Node.random is null or is pointing to some node in the linked list.
-
+<pre>
 */
 /* solution */
 

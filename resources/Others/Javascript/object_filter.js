@@ -1,3 +1,42 @@
+/* statement */
+/*
+Given an object and filter function return the object after filter
+
+<pre>
+Example 1:
+Object = {
+  a: 1,
+  b: {
+    c: 2,
+    d: -3,
+    e: {
+      f: {
+        g: -4,
+      },
+    },
+    h: {
+      i: 5,
+      j: 6,
+    },
+  },
+};
+
+filterFunction = filterDeep(obj1, (n) => n >= 0)
+
+output = {
+  a: 1,
+  b: {
+    c: 2,
+    h: {
+      i: 5,
+      j: 6,
+    },
+  },
+};
+</pre>
+
+*/
+
 /* solution */
 
 let obj1 = {

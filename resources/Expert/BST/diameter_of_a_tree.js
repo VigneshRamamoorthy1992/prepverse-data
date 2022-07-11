@@ -14,7 +14,7 @@ The diameter of a binary tree is the length of the longest path between any two 
 The length of a path between two nodes is represented by the number of edges between them.
 
 
-
+<pre>
 Example 1:
 
 
@@ -31,7 +31,7 @@ Constraints:
 
 The number of nodes in the tree is in the range [1, 104].
 -100 <= Node.val <= 100
-
+</pre>
 */
 /* solution */
 
